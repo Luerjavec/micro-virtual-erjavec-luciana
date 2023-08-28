@@ -1,0 +1,86 @@
+//variables y mapas
+
+$colors: (
+    "trueblue": #0a2451,
+    "light": #77a0b1,
+    "lightsalmon": #b9d3e9,
+    "truesalmon": #b9d3e9,
+    "deepsalmon": #b9d3e9,
+    "lightblue": #b9d3e9,
+    "accentcolor": #d9edff,
+    "transpwhite": #ffffff29,
+    "offwhite": #f6f6f6,
+    "offblack": #121212,
+    "shadow": #00000024,
+);
+
+$font1: 'Roboto', sans-serif;
+$font2: 'Nunito', sans-serif;
+
+$text-xl: 3.3rem;
+$text-l: 2.2rem;
+$text-m: 1.4rem;
+$text-s: 1.1rem;
+$text-sm: 0.9rem;
+$text-xsm: 0.8rem;
+
+
+//mixins
+
+@mixin tablet {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 992px) {
+        @content;
+    }
+}
+
+@mixin box ($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+@mixin flex ($direction: null, $justify: null, $align: null) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin font ($color, $size, $weight, $family:null) {
+    color: $color;
+    font-size: $size;
+    font-weight: $weight;
+    font-family: $family;
+}
+
+@mixin gral_text ($size: #{$text-s}, $weight: 500, $textalign: justify) {
+    color: map-get($colors, "offblack");
+    font-size: $size;
+    font-weight: $weight;
+    line-height: 1.5;
+    text-align: $textalign;
+}
+
+@mixin button ($bordercolor, $bgcolor: transparent, $hovercolor: map-get($colors, "offwhite"), $radius: 25px, $hoverbgcolor: $bordercolor) {
+    color: $bordercolor;
+    background-color: $bgcolor;
+    border: 2px solid $bordercolor;
+    border-radius: $radius;
+
+    &:hover, &:focus{
+        color: $hovercolor;
+        background-color: $hoverbgcolor;
+        border: 2px solid transparent;
+    }
+}
+
+@mixin bgimg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="microscopio virtual, simulador virtual, práctica en línea, e-learning, iniciar sesion">
+    <title>Simulador de microscopio virtual | Practica en línea y mejora tus habilidades</title>
+    <link rel="shortcut icon" href="../media/favicon-MV.avif">
+
+    <!-- Librería sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+    <!-- Librería email.js -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">emailjs.init('BAUP8BhbDOZEfM42e')</script>
+    
+    <!-- Librería luxon -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+    
+    <!-- FIREBASE ??? -->
+    
+    <!-- Mis script -->
+    <script src="../js/registration.js" type="module" defer></script>
+    
+    <!-- Librería onscroll -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- CSS bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- Mis estilos CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <!-- Navbar de bootstrap offcanvas-->
+        <nav class="navbar navbar-expand-lg px-4 container-fluid position-absolute top-0 p-3 ">
+            <a class="navbar-brand" href="../index.html"><img class="logo my-3" src="../media/logomv.png"
+                    alt="Logo Microscopio Virtual"></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header text-white">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!-- Navigation links -->
+                    <ul class="navbar-nav d-flex align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./ciencia-hoy.html">Ciencia hoy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="Contacto" href="./contacto.html">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-login text-white" aria-current="Inicio sesion" href="./registration.html">Ingresar</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-registration">
+
+        <!-- Sección banner (fondo completo imagen)-->
+        <section
+            class="section-banner-A full-img-bg banner-registration container-fluid justify-content-evenly align-items-center vh-100">
+
+            <div class="registration-container" data-aos="fade-up">
+
+                <div class="form-box olvidar">
+                    <h2>Recuperar contraseña</h2>
+                    <form class="olvidar-form pt-3" action="#">
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                            <input id="olvidar-mail" class="input-box__input" placeholder="mail" type="text" name="olvidar-mail"
+                                aria-describedby="Email" required></input>
+                            <label class="input-box__label" for="olvidar-mail">Mail</label>
+                            </div>
+                        <button type="submit" id="olvidar-button" class="btn btn-registration w-100">Recuperar contraseña</button>
+                        <div class="login-register-olvidar">
+                            <p>Conozco mi contraseña. <a href="#" class="login-back-link">Iniciar sesión</a></p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-box login">
+                    <h2>Iniciar sesión</h2>
+                    <form class="login-form pt-3" action="#">
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                            <input id="login-mail" class="input-box__input" placeholder="mail" type="email" name="mail"
+                                aria-describedby="Email" required></input>
+                            <label class="input-box__label" for="email">Mail</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                            <input id="login-password" class="input-box__input" placeholder="contraseña" type="password"
+                                name="password" aria-describedby="contraseña" required></input>
+                            <label class="input-box__label" for="contraseña">Contraseña</label>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="#" class="olvidar-link">Olvidé mi contraseña</a>
+                        </div>
+                        <button type="submit" id="login-button" class="btn btn-registration w-100">Iniciar sesión</button>
+                        <button type="button" id="login-google" class="btn btn-registration w-100"><ion-icon id="google" name="logo-google"></ion-icon> Ingresar con Google</button>
+                        <div class="login-register-olvidar">
+                            <p>¿No tienes una cuenta? <a href="#" class="register-link">Regístrate</a></p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-box register">
+                    <h2>Crea tu cuenta</h2>
+                    <form id="register-form" class="register-form pt-3" action="#">
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="person"></ion-icon></span>
+                            <input id="register-user" autocomplete="off" class="input-box__input" placeholder="usuario" type="text" name="register-user"
+                                aria-describedby="Usuario" required></input>
+                            <label class="input-box__label" for="register-user">Nombre</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                            <input id="register-mail" class="input-box__input" placeholder="mail" type="email" name="register-mail"
+                                aria-describedby="Email" required></input>
+                            <label class="input-box__label" for="email">Mail</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                            <input id="register-password" class="input-box__input" placeholder="contraseña" type="password" name="register-password"
+                                aria-describedby="contraseña" required></input>
+                            <label class="input-box__label" for="contraseña">Contraseña</label>
+                        </div>
+                        <div class="perfil">
+                            <p>Tipo de perfil</p>
+                            <div class="perfil-box">
+                                <div class="radio-box">
+                                    <input id="profesor" type="radio" name="perfil"
+                                        aria-describedby="profesor" value="profesor" required></input>
+                                    <div class="label-box">
+                                        <span class="label-box__icon"><ion-icon name="key"></ion-icon></span>
+                                        <label class="label-box__label" for="profesor">Profesor</label>
+                                    </div>
+                                </div>
+                                <div class="radio-box">
+                                    <input id="alumno" type="radio" name="perfil"
+                                        aria-describedby="alumno" value="alumno" required></input>
+                                    <div class="label-box">
+                                        <span class="label-box__icon"><ion-icon name="create"></ion-icon></span>
+                                        <label class="label-box__label" for="alumno">Alumno</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="register-button" class="btn btn-registration w-100">Registrarme</button>
+                        <div class="login-register-olvidar">
+                            <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Iniciá sesión</a></p>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Formulario de inputo de bootstrap-->
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer row mx-auto p-3">
+        <div class="col-lg-8 mx-lg-3">
+            <h4 class="footer__title">Sobre nosotros</h4>
+            <p class="footer__text">Somos un grupo de docentes de la
+                Facultad de Farmacia y Bioquímica de la UBA comprometidos en brindar una
+                experiencia de aprendizaje de calidad. Ofrecemos una plataforma
+                interactiva para practicar el enfoque de preparados sin límites de tiempo y ubicación. Nuestro
+                microscopio virtual
+                les permite a tus alumnos perfeccionar sus habilidades y te permite personalizar tu experiencia docente
+                para un aprendizaje de ciencias más efectivo.</p>
+        </div>
+        <div class="col-lg-3 mx-lg-3">
+            <h4 class="footer__title">Encontranos en redes</h4>
+            <ul class="px-2 d-flex flex-lg-column justify-items-center">
+                <li class="mx-2 mx-lg-0">
+                    <a class="footer__link" href="https://www.facebook.com/" target="_blank">
+                        <ion-icon name="logo-facebook"></ion-icon> Facebook</a>
+                </li>
+                <li class="mx-2 mx-lg-0">
+                    <a class="footer__link" href="https://www.instagram.com/" target="_blank">
+                        <ion-icon name="logo-instagram"></ion-icon> Instagram</a>
+                </li>
+                <li class="mx-2 mx-lg-0">
+                    <a class="footer__link" href="https://twitter.com/" target="_blank">
+                        <ion-icon name="logo-twitter"></ion-icon> Twitter</a>
+                </li>
+        </div>
+    </footer>
+
+    <!-- script de bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <!-- script para animaciones onscroll -->
+    <script> AOS.init(); </script>
+
+    <!-- script de íconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+</body>
+
+</html>

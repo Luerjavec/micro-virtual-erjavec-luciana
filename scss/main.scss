@@ -1,0 +1,14 @@
+// Reset and utilities (variables, mixins and maps)
+@import "utilities";
+@import "reset";
+
+// Components de todas las pages
+@import "components/header&footer";
+@import "components/titles-buttons-banners";
+
+// pages
+@import "pages/contacto";
+@import "pages/ciencia-hoy";
+@import "pages/registration";
+@import "pages/dashboard";
+@import "pages/plataforma";

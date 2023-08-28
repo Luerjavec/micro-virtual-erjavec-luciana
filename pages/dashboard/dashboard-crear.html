@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="microscopio virtual, simulador virtual, práctica en línea, e-learning">
+    <title>Simulador de microscopio virtual | Practica en línea y mejora tus habilidades</title>
+    <link rel="shortcut icon" href="../../media/favicon-MV.avif">
+
+    <!-- Librería sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+    <!-- Librería luxon -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+
+    <!-- Mis scripts -->
+   <script src="../../js/dashboard/dashboard-crear.js" type="module" defer></script>
+
+    <!-- CSS bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Mis estilos CSS -->
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body class="dashboard-body">
+    <div class="dashboard">
+        <aside class="dashboard-aside">
+            <header class="dashboard-aside__header">
+                <h1 class="dashboard-logo">
+                    <a class="navbar-brand" href="../../index.html" target="_blank"><img class="logo my-3"
+                            src="../../media/logomv.png" alt="Logo MV"></a>
+                </h1>
+                <h2 class="account-name"></h2>
+            </header>
+            <nav class="dashboard-aside__nav">
+                <ul class="dashboard-menu">
+                    <li>
+                        <a href="dashboard-home.html"><button id="inicio" class="dashboard-menu__btn boton-categoria">
+                                <ion-icon name="home"></ion-icon> Inicio</button></a>
+                    </li>
+                    <li>
+                        <a href="dashboard-ejercicios.html"><button id="ejercicios"
+                                class="dashboard-menu__btn active boton-categoria">
+                                <ion-icon name="extension-puzzle"></ion-icon> Ejercicios</button></a>
+                    </li>
+                    <li>
+                        <a href="dashboard-tabla.html"><button id="notas" class="dashboard-menu__btn boton-categoria">
+                                <ion-icon name="analytics"></ion-icon> Mis notas</button></a>
+                    </li>
+
+                </ul>
+                <button id="salir" class="dashboard-menu__btn boton-salir">
+                    <ion-icon name="power"></ion-icon></ion-icon> Salir </button>
+            </nav>
+        </aside>
+
+        <main class="crear-main">
+            <h2 class="titulo-principal" id="titulo-principal">Crear nuevo ejercicio</h2>
+            <form class="crear-form">
+                <div class="crear-container">
+                    <div class="crear-container__datos" data-aos="fade-up">
+                        <h5>Definí los datos requeridos</h5>
+                        <div class="register-form pt-3" action="#">
+                            <div class="input-box">
+                                <span class="icon"><ion-icon name="create"></ion-icon></span>
+                                <input id="nuevo-titulo" class="input-box__input" placeholder="titulo" type="text"
+                                    name="titulo" aria-describedby="Titulo" required></input>
+                                <label class="input-box__label" for="nuevo-titulo">Título</label>
+                            </div>
+                            <div class="input-box">
+                                <span class="icon"><ion-icon name="calendar"></ion-icon></span>
+                                <input id="nuevo-vencimiento" class="input-box__input" placeholder="" type="date"
+                                    name="vencimiento" aria-describedby="Vencimiento" required></input>
+                                <label class="input-box__label" for="nuevo-vencimiento">Vencimiento</label>
+                            </div>
+
+                            <div class="input-box">
+                                <span class="icon"><ion-icon name="extension-puzzle"></ion-icon></span>
+                                <input id="nueva-pregunta" class="input-box__input" placeholder="pregunta" type="text"
+                                    name="pregunta" aria-describedby="Pregunta" required></input>
+                                <label class="input-box__label" for="nueva-pregunta">Pregunta</label>
+                            </div>
+                            <div class="input-box opciones">
+                                <span class="icon"><ion-icon name="checkmark"></ion-icon></span>
+                                <input id="nueva-opc1" class="input-box__input" placeholder="opc1" type="text"
+                                    name="opc1" aria-describedby="Opc1" required></input>
+                                <label class="input-box__label" for="nueva-opc1">Opción 1 (correcta)</label>
+                            </div>
+                            <div class="input-box opciones">
+                                <span class="icon"><ion-icon name="close"></ion-icon></span>
+                                <input id="nueva-opc2" class="input-box__input" placeholder="opc2" type="text"
+                                    name="opc2" aria-describedby="Opc2" required></input>
+                                <label class="input-box__label" for="nueva-opc2">Opción 2</label>
+                            </div>
+                            <div class="input-box opciones">
+                                <span class="icon"><ion-icon name="close"></ion-icon></span>
+                                <input id="nueva-opc3" class="input-box__input" placeholder="opc3" type="text"
+                                    name="opc3" aria-describedby="Opc3" required></input>
+                                <label class="input-box__label" for="nueva-opc3">Opción 3</label>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+
+
+                    <div class="crear-container__ajustes" data-aos="fade-up">
+                        <h5>Seleccioná la imagen que los alumnos deben enfocar</h5>
+                        <div class="">
+                            <span class="icon"><ion-icon name="image"></ion-icon></span>
+                            <input accept="image/*" id="nueva-imagen" class="file-input" placeholder="imagen"
+                                type="file" name="imagen" aria-describedby="Imagen" hidden></input>
+                            <!-- <label class="input-box__label" for="nueva-imagen">Vencimiento</label> -->
+                            <button type="button" class="choose-img">Elegí la imagen</button>
+                        </div>
+                        <div class="register-form pt-3" action="#">
+                            <div class="preview-img">
+                                <img alt="preview-img" class="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="crear-ejercicio-button" class="btn btn-registration w-100">Crear
+                    Ejercicio</button>
+            </form>
+
+        </main>
+    </div>
+
+    <!-- script de bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <!-- script de íconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

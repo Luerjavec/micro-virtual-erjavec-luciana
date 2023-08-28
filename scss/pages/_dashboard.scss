@@ -1,0 +1,429 @@
+/********* DASHBOARD *********/
+
+.swal2-popup {
+    background: rgb(223, 223, 223);
+    color: (map-get($colors, "trueblue"));
+}
+.swal2-confirm {
+    background-color: (map-get($colors, "trueblue")) !important;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    background-image: url("../media/dashboard-bg.svg");
+    background-size: cover;
+}
+
+.dashboard-aside .spinner {
+    width: 25px;
+}
+
+.dashboard-main .spinner {
+    width: 50px;
+}
+
+.dashboard-aside {
+    @include flex (column, start, null);
+    position: sticky;
+    top: 0;
+    padding: 2vw 2vw 2vw 3vw;
+    height: 100vh;
+    border-right: 2px solid rgba(255, 255, 255, 0.138);
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.dashboard-logo .logo {
+    margin: 0;
+}
+
+.account-name {
+    @include font (rgb(155, 182, 241), $text-sm, 400);
+    padding-top: 30px;
+    padding-left: 15px;
+}
+
+.dashboard-menu {
+    @include flex (column, null, null);
+    position: relative;
+    margin-right: 1vw;
+    padding: 70px 0;
+    gap: 1rem;
+}
+
+.dashboard-menu__btn {
+    @include flex (null, null, center);
+    @include font (white, $text-s, 600);
+    background-color: rgba(12, 12, 25, 0);
+    border: 0;
+    cursor: pointer;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    min-width: 150px;
+
+    &:hover {
+        color: rgb(155, 182, 241);
+    }
+
+    &.active {
+        background-color: rgba(18, 19, 48, 0.412);
+        color: rgb(155, 182, 241);
+        border-radius: 1rem;
+        position: relative;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+
+.boton-salir:hover {
+    color: rgb(255, 138, 138);
+}
+
+.dashboard-main,
+.crear-main {
+    margin: .5rem;
+    padding: 2rem;
+}
+
+.titulo-principal {
+    color: rgba(255, 255, 255, 0.837);
+    margin-bottom: 2rem;
+}
+
+.home {
+    @include flex (column, center, start);
+    padding-top: 60px;
+
+    #bienvenida,
+    #perfil {
+        padding-top: 20px;
+        color: rgba(255, 255, 255, 0.84);
+    }
+}
+
+/* (1) Estilos para Dashboard -> EJERCICIOS */
+
+#crear-btn {
+    button {
+        background-color: transparent;
+        border: 0;
+        @include font (rgb(126, 149, 197), 6rem, 400);
+        align-self: center;
+        padding: 30px;
+    }
+
+    p {
+        @include font (rgb(126, 149, 197), 1.2rem, 600);
+    }
+
+    &:hover {
+        background-color: rgb(126, 149, 197);
+
+        >a,
+        button,
+        p {
+            color: #1f1f3e;
+        }
+    }
+}
+
+.ejercicios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.ejercicio {
+    &.visible {
+        display: normal;
+    }
+
+    &.oculto {
+        display: none;
+    }
+
+    background-color: rgba(255, 255, 255, 0.03);
+    @include flex (column, center, space-between);
+    padding: .5rem;
+    border-radius: 1rem;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.138);
+    transition: all .3s;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-10px);
+    }
+}
+
+.ejercicio-header {
+    @include flex(column, center, center);
+    border-bottom: 2px solid rgba(182, 201, 255, 0.138);
+
+    & .ejercicio__previewimg {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        object-position: 25% 25%;
+        border-radius: 50%;
+        padding: 1rem;
+        filter: saturate(80%) brightness(80%);
+    }
+
+    & .ejercicio__titulo {
+        @include font (rgb(126, 149, 197), 1.2rem, 600);
+        padding: .2rem .8rem;
+        margin-bottom: .5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}
+
+.ejercicio-detalles {
+    @include flex(row, space-around, center);
+    padding: 1rem 0;
+
+    h5 {
+        @include font (rgba(255, 255, 255, 0.7), $text-sm, 400);
+        text-align: center;
+    }
+
+    & .ejercicio__text-left,
+    .ejercicio__text-right {
+        @include flex (null, center, center);
+        gap: 6px;
+    }
+}
+.Venció {
+    background-color: #fff8c3cd;
+}
+.Vence {
+    background-color: rgb(126, 149, 197);
+}
+.ejercicio-footer {
+    @include flex(row, space-between, center);
+    padding: 0;
+    margin-bottom: -8px;
+
+    & .vencimiento {
+        @include font (black, $text-xsm, 500);
+        @include flex (null, null, center);
+        gap: .3rem;
+        border-radius: 18px;
+        margin: 0 0 0 10px;
+        padding: 3px 10px;
+    }
+
+    & .btn-container {
+        @include flex (row, center, center);
+        margin-left: -8px;
+
+        & .edit-btn, .delete-btn {
+            margin-right: 1px;
+            font-size: 1.8rem;
+            border-radius: 0;
+        }
+
+        & .edit-btn {
+            border-bottom-left-radius: 13px;
+        }
+
+        & .delete-btn {
+            border-top-right-radius: 13px;
+        }
+
+    }
+
+    & .ejercicio__btn, .ejercicio__edit {
+        @include flex (null, center, center);
+        @include font (#1f1f3e, 1.8rem, 600);
+        border: 2px solid transparent;
+        background-color: rgb(126, 149, 197);
+        gap: 1rem;
+        padding: .3rem;
+        transition: all .2s;
+
+        & .arrow {
+            transform: rotate(45deg);
+        }
+
+        &:hover,
+        &:active {
+            background-color: transparent;
+            border: 2px solid rgb(126, 149, 197);
+            color: rgb(126, 149, 197),
+        }
+    }
+
+    .ver {
+        border-radius: 13px 0 13px 0;
+        margin-right: -8px;
+    }
+}
+
+/* (2) Estilos para Dashboard -> TABLA (Notas, alumnos) */
+
+.lista {
+    width: 59vw;
+    margin: auto;
+
+    .table {
+        background-color: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        @include font (white, $text-s, 400);
+
+        & th,
+        & td {
+            border-bottom: 3px solid rgba(18, 19, 48, 0.6);
+            padding-right: 15px;
+        }
+
+        & thead th,
+        tfoot {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: rgb(154, 173, 214);
+            font-weight: 600;
+        }
+
+        .col-titulo, .col-notas {
+            width: 65%;
+        }
+    }
+}
+
+.accordion-header-profesor {
+    display: none;
+}
+
+.more-notas {
+    padding: 0 10px 10px 0;
+    background-color: rgba(12, 12, 25, 0);
+    @include font (map-get($colors, "light"), $text-sm, 400);
+    
+}
+
+.notas {
+    @include font (white, $text-s, 400);
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+/* (3) Estilos para Dashboard -> CREAR EJERCICIO */
+
+.crear-main {
+    @include flex(column, center, space-around);
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    h2 {
+        margin-top: 30px;
+        margin-left: 30px;
+    }
+}
+
+.crear-form {
+    @include flex (column, space-around, center);
+    width: 100%;
+    padding: 10px 50px;
+}
+
+.crear-container {
+    @include flex (row, space-around, center);
+    width: 100%;
+
+    &__datos,
+    &__ajustes {
+        @include flex (column, space-around, center);
+        position: relative;
+        height: 550px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0px 3px 10px map-get($colors, "shadow");
+        background-color: rgba(255, 255, 255, 0.032);
+        transition: all .4s;
+        overflow: hidden;
+
+        & h5 {
+            padding-top: 20px;
+            margin: 0;
+            color: map-get($colors, "light");
+        }
+
+        & .register-form {
+            width: 80%;
+        }
+    }
+
+    .choose-img {
+        background-color: #6C757D;
+        border: 1px solid #6C757D;
+    }
+
+    .preview-img {
+        @include flex(null, center, center);
+
+        img {
+            visibility: hidden;
+            max-width: 490px;
+            max-height: 335px;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+
+            &.visible {
+                visibility: visible;
+            }
+        }
+    }
+}
+
+.crear-container__datos {
+    width: 37%;
+}
+
+.crear-container__ajustes {
+    width: 60%;
+}
+
+input[type="date"] {
+    color: transparent;
+    transition: all .2s;
+
+    &:focus,
+    &:valid {
+        color: map-get($colors, "light")
+    }
+}
+
+.opciones {
+    width: 80%;
+    margin-left: 20px;
+
+    & label,
+    & input {
+        font-size: .9rem;
+        font-weight: 400;
+
+    }
+}
+
+::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+#crear-ejercicio-button {
+    margin: 30px;
+}

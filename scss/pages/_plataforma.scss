@@ -1,0 +1,450 @@
+
+/********* PLATAFORMA *********/
+
+.small-devices-msj {
+    visibility: hidden;
+    height: 4vh;
+    text-align: left;
+    align-self: left;
+}
+
+.bg-plataforma {
+    visibility: visible;
+}
+
+.body-plataforma {
+    position: relative;
+}
+
+.back-btn {
+    @include font (rgb(175, 202, 219), 3.5rem, 500);
+    border: 0;
+    background-color: transparent;
+    position: absolute;
+    top: 13px;
+    left: 24px;
+    transition: all .3s;
+
+    &:hover {
+        color: white;
+        transform: translateX(-5px)
+    }
+}
+
+.btn-offcanvas-ejercicios {
+    @include flex (null, center, center);
+    @include font (black, 3rem, 500);
+    visibility: hidden;
+    width: 50px;
+    height: 50px;
+    border: 0;
+    background-color: #ffd9de;
+    border-radius: 6px;
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    transition: all .3s;
+    z-index: 3;
+    @media (max-width: 1200px) {
+        visibility: visible;
+    }
+
+    &:hover {
+        transform: translateX(-5px)
+    }
+}
+
+#offcanvasEnd {
+    background-color: #000000d4;
+    &-body{
+        margin-right: 3vw;
+        @include flex (null, center, start);
+
+        @include desktop {
+            @include flex (null, end, center);
+        } 
+    }
+}
+
+.header-plataforma .navbar {
+    background: rgb(0, 7, 18);
+    background: linear-gradient(359deg, rgba(0, 7, 18, 0) 18%, rgba(0, 7, 18, 0.31985294117647056) 40%, rgba(0, 7, 18, 0.7904411764705882) 71%);
+}
+
+.plataforma {
+    display: grid;
+    margin: auto;
+    padding: 4vh 10px 10px 10px;
+    width: 100vw;
+    height: 94vh;
+    grid-template:
+        "microscopio visualizacion ejercicios" minmax(600px, 7fr) 
+        "controles visualizacion ejercicios" 1fr
+        / minmax(450px, 5fr) 9fr 4fr;
+    @media (max-width: 1200px) {
+        grid-template:
+        "microscopio visualizacion ejercicios" minmax(600px, 7fr) 
+        "controles visualizacion ejercicios" 1fr
+        / 2fr 3fr 0;
+    }
+}
+
+/* Microscopio que representa al real */
+
+.microscopio {
+    grid-area: microscopio;
+    overflow: hidden;
+    position: relative;
+
+    .microscopio-instrumento,
+    .microscopio-platina,
+    .microscopio-objetivos,
+    .microscopio-luz,
+    .microscopio-luzdfg {
+        object-fit: contain;
+        max-width: 100%;
+        max-height: 100%;
+        position: absolute;
+    }
+
+    .microscopio-instrumento {
+        left: 0px;
+        object-position: center;
+    }
+
+    .microscopio-platina {
+        margin-top: 2px;
+        left: 0px;
+        top: -10px;
+    }
+
+    .microscopio-objetivos {
+        left: 0px;
+        top: 0px;
+    }
+
+    .microscopio-luzdfg {
+        opacity: 34%;
+    }
+
+    .microscopio-luz {
+        opacity: 41%;
+
+    }
+}
+
+/* Controles que modifican las vistas de la imagen */
+
+#platinaXSlider, #diafragmaSlider,
+#platinaYSlider, #voltimetroSlider{
+    position: absolute;
+    transition: all .3 ease;
+    &::-webkit-slider-runnable-track {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+    &::-moz-range-track {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+}
+
+#platinaXSlider:hover#platinaXSlider::-webkit-slider-runnable-track,
+#platinaYSlider:hover#platinaYSlider::-webkit-slider-runnable-track,
+#voltimetroSlider:hover#voltimetroSlider::-webkit-slider-runnable-track,
+#diafragmaSlider:hover#diafragmaSlider::-webkit-slider-runnable-track {
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all .3 ease;
+}
+
+#platinaXSlider {
+    left: 18px;
+    top: 340px;
+    width: 120px;
+    transform: rotate(23deg);
+    &::-webkit-slider-thumb {
+        background-color: rgb(61, 81, 212);
+    }
+    &::-moz-range-thumb {
+        background-color: rgb(61, 81, 212);
+    }
+    &::-ms-thumb {
+        background-color: rgb(61, 81, 212);
+    }
+}
+
+#platinaYSlider {
+    left: 30px;
+    top: 265px;
+    width: 120px;
+    transform: rotate(-8.5deg);
+    &::-webkit-slider-thumb {
+        background-color: rgb(61, 81, 212);
+    }
+    &::-moz-range-thumb {
+        background-color: rgb(61, 81, 212);
+    }
+    &::-ms-thumb {
+        background-color: rgb(61, 81, 212);
+    }
+}
+
+#voltimetroSlider {
+    left: 315px;
+    top: 500px;
+    width: 70px;
+    transform: rotate(-22deg);
+    &::-webkit-slider-thumb {
+        background-color: rgb(236, 191, 100);
+    }
+    &::-moz-range-thumb {
+        background-color: rgb(236, 191, 100);
+    }
+    &::-ms-thumb {
+        background-color: rgb(236, 191, 100);
+    }
+    &::-webkit-slider-runnable-track {
+        background-color: rgba(255, 255, 255, 0.09);
+    }
+    &::-moz-range-track {
+        background-color: rgba(255, 255, 255, 0.09);
+    }
+}
+
+#diafragmaSlider {
+    left: 150px;
+    top: 353px;
+    width: 80px;
+    transform: rotate(9deg);
+    &::-webkit-slider-thumb {
+        background-color: #53be6c;
+    }
+    &::-moz-range-thumb {
+        background-color: #53be6c;
+    }
+    &::-ms-thumb {
+        background-color: #53be6c;
+    }
+}
+
+#micrometricoCirculo {
+    position: absolute;
+    left: 328px;
+    top: 335px;
+    border: 10px solid rgba(255, 255, 255, 0.05);
+    border-radius: 100%;
+    width: 66px;
+    height: 66px;
+    transition: all .2 ease;
+    z-index: 1;
+}
+
+#micrometricoSlider {
+    position: absolute;
+    left: 328px;
+    top: 335px;
+    transition: all .2s ease;
+    z-index: 2;
+    .rs-path-color {
+        background-color: transparent;
+    }
+    .rs-range-color {
+        background-color: transparent;
+    }
+    .rs-bg-color {
+        background-color: transparent;
+    }
+    .rs-border {
+        border-color: transparent;
+    }
+    .rs-handle {
+        background-color: rgb(45, 187, 209);
+    }
+}
+
+#micrometricoSlider:hover~#micrometricoCirculo {
+    border: 10px solid rgba(255, 255, 255, 0.1);
+}
+
+#macrometricoCirculo {
+    position: absolute;
+    left: 311px;
+    top: 317px;
+    border: 10px solid rgba(255, 255, 255, 0.05);
+    border-radius: 100%;
+    width: 103px;
+    height: 103px;
+    transition: all .2 ease;
+    z-index: 1;
+}
+
+#macrometricoSlider {
+    position: absolute;
+    left: 311px;
+    top: 317px;
+    transition: all .2s ease;
+    z-index: 2;
+    .rs-path-color {
+        background-color: transparent;
+    }
+    .rs-range-color {
+        background-color: transparent;
+    }
+    .rs-bg-color {
+        background-color: transparent;
+    }
+    .rs-border {
+        border-color: transparent;
+    }
+    .rs-handle {
+        background-color: rgb(45, 187, 209);
+    }
+}
+
+#macrometricoSlider:hover~#macrometricoCirculo {
+    border: 10px solid rgba(255, 255, 255, 0.1);
+}
+
+#platinaX-label, #platinaY-label {
+    color: transparent;
+    position: absolute;
+    left: 30px;
+    top: 220px;
+}
+
+
+#micro-label {
+    color: transparent;
+    position: absolute;
+    left: 320px;
+    top: 280px;
+}
+
+#macro-label {
+    color: transparent;
+    position: absolute;
+    left: 320px;
+    top: 280px;
+}
+
+#voltimetro-label {
+    color: transparent;
+    position: absolute;
+    left: 300px;
+    bottom: 15px;
+}
+
+#diafragma-label {
+    color: transparent;
+    position: absolute;
+    left: 150px;
+    top: 325px;
+}
+
+#platinaXSlider:hover~#platinaX-label,
+#platinaYSlider:hover~#platinaY-label {
+    @include font (rgb(38, 88, 189), 1rem, 700);
+}
+
+#voltimetroSlider:hover~#voltimetro-label {
+    @include font (rgb(219, 142, 0), 1rem, 700);
+}
+
+#micrometricoSlider:hover~#micro-label {
+    @include font (rgb(31, 148, 166), 1rem, 700);
+}
+
+#macrometricoSlider:hover~#macro-label {
+    @include font (rgb(31, 148, 166), 1rem, 700);
+}
+
+#diafragmaSlider:hover~#diafragma-label {
+    @include font (#32bf53, 1rem, 700);
+}
+
+
+.controles {
+    grid-area: controles;
+    padding: 0 50px;
+    @include font (map-get($colors, "offwhite"), 1rem, 500);
+
+    .form-select {
+        margin-bottom: 10px;
+    }
+}
+
+/* Visualización central de la imagen */
+
+.visualizacion {
+    background-color: black;
+    grid-area: visualizacion;
+    overflow: hidden;
+    width: 47vw;
+    min-width: 500px;
+    min-height: 500px;
+    position: relative;
+}
+
+#ejercicio-img-recorte {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 47vw;
+    min-width: 500px;
+    z-index: 2;
+}
+
+#ejercicio-img-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 70px;
+    width: 47vw;
+    min-width: 500px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Panel de preguntas a la derecha */
+
+.preguntas-form {
+    grid-area: ejercicios;
+    @include flex(column, start, space-around);
+    padding: 5px 10px 5px 5px;
+    @include font (map-get($colors, "offwhite"), 1rem, 500);
+
+    .preguntas-lista {
+        @include flex (column, center, null);
+        li {
+            margin-top: 20px;
+        }
+    }
+
+    .btn {
+        margin-top: 20px;
+        @include button (map-get($colors, "lightblue"), transparent, map-get($colors, "offwhite"), 25px, map-get($colors, "trueblue"));
+    }
+}
+
+.subtitulo-plataforma {
+    @include font (map-get($colors, "offwhite"), ($text-m - 0.3rem), 700);
+}
+
+
+/* Media queries */
+
+@media (max-width: 1060px) {
+    .small-devices-msj {
+        @include flex (null, center, center);
+        visibility: visible;
+        height: 100vh;
+
+        h2 {
+            color: white;
+            padding: 4rem;
+            text-align: center;
+        }
+    }
+
+    .plataforma {
+        display: none;
+    }
+}

@@ -1,0 +1,113 @@
+/*HEADER de todas las páginas*/
+    /*Header - elementos Offcanvas*/
+
+nav .offcanvas {
+    background-color: #000000d4;
+    &-body{
+        margin-right: 3vw;
+        @include flex (null, center, start);
+
+        @include desktop {
+            @include flex (null, end, center);
+        } 
+    }
+}
+
+.btn-close {
+    background-color: map-get($colors, "offwhite");
+}
+
+    /*Header - elementos navegables*/
+
+.navbar-toggler{
+    background-color: #ffffff72;
+
+    &:focus, &:hover{
+        background-color: map-get($colors, "offwhite");
+    }
+}
+
+.logo {
+    height: 22px;
+    margin-left: 2.5vw;
+}
+
+.nav-login {
+    @include font (map-get($colors, "lightblue"), $text-s, 500, $font1);
+    margin: 0px 1.1vw;
+    padding: 8px 20px 8px 20px;
+    align-self: center;
+    transition: color .2s, background-color .2s;
+    background-color: transparent;
+    border: 2px solid map-get($colors, "lightblue");
+    border-radius: 10px;
+
+    &:not(.text-white):hover, &:not(.text-white):focus{
+        color: black;
+        background-color: map-get($colors, "lightblue");
+        border: 2px solid transparent;
+    }
+}
+
+.text-white {
+    pointer-events: none;
+}
+
+.nav-login.text-white {
+    border: 2px solid white;
+}
+
+
+.nav-link:not(.nav-login) {
+    @include font (map-get($colors, "lightblue"), $text-s, 500, $font1);
+    margin: 0px 1.1vw;
+    position: relative;
+    transition: color .2s;
+
+
+    &:not(.text-white)::after {
+        @include box (50%, 2px);
+        content:"";
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: 6px;
+        transition: all .2s;
+        transform: scale(0, 1);
+        transform-origin: 50% 0%;
+        background: map-get($colors, "offwhite");
+    }
+
+    &:hover, &:focus{
+        color: map-get($colors, "offwhite");
+        &::after {
+            transform: scale(1, 1);
+        }
+    }
+}
+
+/*FOOTER de todas las páginas*/
+
+.footer {
+    background: rgb(0, 37, 105);
+    background: linear-gradient(126deg, rgb(0, 40, 79) 9%, rgb(0, 20, 60) 100%);
+
+    &__title {
+        @include font (map-get($colors, "lightsalmon"), $text-s, 500);
+        padding: 10px 0px;
+    }
+
+    &__text, &__link {
+        @include font (map-get($colors, "offwhite"), $text-sm, null);
+        text-align: justify;
+    }
+
+    &__link {
+        transition: .2s;
+        
+        &:hover {
+            color: map-get($colors, "lightsalmon");
+        }
+    }
+}

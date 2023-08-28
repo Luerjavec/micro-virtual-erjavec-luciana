@@ -1,0 +1,23 @@
+/* reseteo de estilos + typos */
+
+//fonts
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: $font2;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    text-decoration: none;
+}
+
+i { 
+    padding: 0px 5px 
+}

@@ -1,0 +1,259 @@
+/********* SECCION REGISTRATION *********/
+
+.banner-registration {
+    background-image: url("../media/registration.avif");
+}
+
+.formulario-registration {
+    margin-top: 40px;
+}
+
+
+.registration-container {
+    @include flex (null, center, center);
+    position: relative;
+    height: 490px;
+    width: 400px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0px 3px 10px map-get($colors, "shadow");
+    background-color: rgba(255, 255, 255, 0.032);
+    transition: all .4s;
+    overflow: hidden;
+}
+
+.registration-container .form-box {
+    width: 100%;
+    padding: 40px;
+    transition: all .4s;
+
+    h2 {
+        @include font (map-get($colors, "accentcolor"), $text-l, 700);
+        text-align: center;
+    }
+
+    &.login {
+        transition: transform .4s ease;
+        transform: translateX(0);
+    }
+
+    &.register {
+        position: absolute;
+        transition: none;
+        transform: translateX(400px)
+    }
+
+    &.olvidar {
+        position: absolute;
+        transition: none;
+        transform: translateX(-400px)
+    }
+}
+
+.registration-container.registrarse {
+    height: 570px;
+    transition: all .4s;
+
+    .form-box.login {
+        transition: none;
+        transform: translateX(-400px);
+    }
+
+    .form-box.register {
+        transition: transform .4s ease;
+        transform: translateX(0);
+    }
+
+    .form-box.olvidar {
+        transition: none;
+        transform: translateX(400px);
+    }
+}
+
+.registration-container.olvidar {
+    height: 400px;
+    transition: all .4s;
+
+    .form-box.login {
+        transition: none;
+        transform: translateX(800px);
+    }
+
+    .form-box.register {
+        transition: none;
+        transform: translateX(400px);
+    }
+
+    .form-box.olvidar {
+        transition: transform .4s ease;
+        transform: translateX(0px);
+    }
+}
+
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid map-get($colors, "truesalmon");
+    margin: 23px 0px;
+
+    &__label {
+        @include font (map-get($colors, "truesalmon"), $text-s, 500);
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        transition: all .3s ease-in-out;
+    }
+
+    &__input {
+        @include font (map-get($colors, "light"), $text-s, 600);
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        line-height: 55px;
+        padding: 0 30px 0 5px;
+
+        &::placeholder {
+            visibility: hidden;
+        }
+
+        &:focus~label,
+        &:valid~label {
+            top: -5px;
+        }
+    }
+
+    .icon {
+        position: absolute;
+        right: 8px;
+        font-size: $text-s;
+        color: map-get($colors, "truesalmon");
+        line-height: 55px;
+    }
+}
+
+.perfil {
+    @include flex (column, space-around, null);
+    @include font (map-get($colors, "truesalmon"), $text-s, 600);
+    margin: 0 0 15px 5px;
+
+    &-box {
+        @include flex (null, space-around, null);
+        @include font (map-get($colors, "truesalmon"), $text-s, 400);
+        margin: -15px 0 15 px;
+    }
+}
+
+.radio-box {
+    height: 35px;
+    width: 130px;
+
+    .label-box {
+        @include flex(row, center, center);
+        height: 100%;
+        padding-right: 5px;
+        border: 2px solid #add8e67e;
+        border-radius: 12px;
+        transition: all .3s ease;
+        text-align: center;
+        &__icon{
+            height: 25px;
+            padding: 0px 5px 5px 5px;
+        }
+        &__label {
+            @include font (map-get($colors, "truesalmon"), $text-sm, 500);
+        }
+    }
+
+    input {
+        position: absolute;
+        opacity: 0;
+        height: 35px;
+        width: 130px;
+        cursor: pointer;
+
+        &:hover+.label-box {
+            border: 2px solid white;
+            box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.211);
+
+            .label-box__icon,
+            .label-box__label {
+                color: white;
+            }
+        }
+
+        &:checked+.label-box {
+            background-color: map-get($colors, "light");
+            border: 2px solid map-get($colors, "light");
+            box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.211);
+
+            .label-box__icon,
+            .label-box__label {
+                color: black;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+
+.forgot-password {
+    margin: -10px 0 15px;
+    padding-left: 5px;
+
+    a {
+        @include font (map-get($colors, "truesalmon"), $text-sm, 400);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.btn-registration {
+    @include button (map-get($colors, "accentcolor"), transparent, black, 15px, map-get($colors, "accentcolor"));
+    font-size: $text-s;
+    font-weight: 700;
+    margin: 10px auto 10px auto;
+    
+}
+
+#login-google {
+    @include flex (row, center, center);
+    padding-left: 30px;
+    position: relative;
+    #google {
+        position: absolute;
+        left: 50px;
+    }
+}
+
+.login-register-olvidar {
+    @include font (map-get($colors, "truesalmon"), $text-sm, 400);
+    text-align: center;
+    margin: 15px 0 10px;
+
+    p a {
+        @include font (map-get($colors, "accentcolor"), $text-sm, 600);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/*Hacer que el autocompletar no arruine el estilo*/
+
+input:-webkit-autofill, input:-webkit-autofill:hover,
+input:-webkit-autofill:focus, input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: map-get($colors, "light");
+}

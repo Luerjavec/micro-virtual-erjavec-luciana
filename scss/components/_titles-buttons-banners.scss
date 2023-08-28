@@ -1,0 +1,188 @@
+/*COMPONENTES COMUNES A TODAS LAS PÁGINAS*/
+/*Títulos y botones comunes*/
+
+.title-big {
+    @include font (map-get($colors, "offwhite"), ($text-xl - 0.8rem), 500);
+    padding: 10px 0px;
+    animation: fadein 1s ease-in-out;
+    font-family: $font1;
+
+    @include tablet {
+        font-size: $text-xl;
+    }
+}
+
+.title-small {
+    @include font (map-get($colors, "trueblue"), ($text-l - 0.5rem), 500);
+    margin: 0 auto 35px auto;
+    padding: 5px 0px;
+    position: relative;
+    text-align: center;
+    transition: color .2s;
+    font-family: $font1;
+
+    @include tablet {
+        font-size: $text-l;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -10px;
+        margin: auto;
+        background: map-get($colors, "truesalmon");
+        @include box (100px, 2px);
+    }
+}
+
+.subtitle-big {
+    @include font (map-get($colors, "offwhite"), ($text-m - 0.3rem), 400);
+    padding: 0px 0px 20px 0px;
+    animation: fadein 2s ease-in-out;
+    font-family: $font1;
+
+    @include tablet {
+        font-size: $text-m;
+    }
+}
+
+.subtitle-small {
+    @include font (map-get($colors, "trueblue"), $text-m, 500);
+    padding-top: 30px;
+    font-family: $font1;
+}
+
+.title-colored {
+    color: map-get($colors, "truesalmon");
+    font-family: $font1;
+    font-weight: 700;
+}
+
+.btn-big {
+    @include button (map-get($colors, "lightsalmon"), transparent, map-get($colors, "trueblue"), 40px);
+    font-size: ($text-m - 0.3rem);
+    font-weight: bold;
+    animation: fadein 2.5s ease-in-out;
+    transition: 0.2s;
+    padding: 6px 12px;
+
+    @include tablet {
+        font-size: $text-m;
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0%;
+    }
+
+    20% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+/*Banner de todas las páginas (con fondo completo de imagen o video)*/
+
+.full-video-bg {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    filter: brightness(70%);
+    visibility: hidden;
+
+    @include tablet {
+        visibility: visible;
+    }
+}
+
+.full-img-bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.section-banner-A {
+    @include flex (column, center, start);
+    padding: 0 5vw;
+    text-align: left;
+
+    ion-icon {
+        height: 110%;
+    }
+}
+
+.section-banner-B {
+    @include flex (column, center, end);
+    padding: 0 5vw;
+    text-align: right;
+}
+
+/********* SECCION INDEX *********/
+
+.banner-index1 {
+    background-image: url("../media/index1.avif");
+    background-position: right;
+
+    @include tablet {
+        background-image: none
+    }
+}
+
+.banner-index2 {
+    background-image: url("../media/index2.avif");
+
+    @include tablet {
+        background-image: none
+    }
+}
+
+.section-items {
+    background-image: url("../media/section-items-bg.png");
+    margin: auto;
+
+    @include tablet {
+        background-image: none;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        background-color: rgba(230, 237, 239, 0.444);
+    }
+}
+
+.items {
+    margin: auto;
+
+    &__article {
+        @include flex (column, center, center);
+        text-align: center;
+        padding: 0px 35px;
+
+        &__img {
+            border-radius: 100%;
+            width: 150px;
+            margin-top: 20px;
+            box-shadow: 0px 5px 25px map-get($colors, "shadow");
+            transition: .3s ease-in-out;
+
+            &:hover {
+                transform: translate(0px, -12px);
+            }
+        }
+
+        &__p {
+            @include gral_text (1rem);
+            padding-top: 10px;
+        }
+    }
+}

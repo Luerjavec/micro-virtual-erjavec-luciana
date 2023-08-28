@@ -1,0 +1,64 @@
+/********* PÁGINA CONTACTO *********/
+
+.banner-contacto {
+    background-image: url("../media/contacto.avif");
+}
+
+.formulario {
+    @include flex (column, center, stretch);
+    width: 37vw;
+    min-width: 300px;
+    margin: auto;
+    padding: 30px 15px;
+    background-color: map-get($colors, "transpwhite");
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0px 3px 10px map-get($colors, "shadow");
+    border-radius: 30px;
+}
+
+.main-contacto {
+    .section-formulario {
+        background-image: url("../media/main-contacto-bg.svg");
+        margin: auto;
+        padding: 40px 0px ;
+    }
+}
+
+.contact-box {
+    position: relative;
+    margin: 30px 0px;
+    
+    &__label {
+        @include font (map-get($colors, "trueblue"), 1rem, null);
+        height: min-content;
+        position: absolute;
+        top: 8px;
+        left: 5px;
+        padding: 0px 10px;
+        transition: all .3s ease-in-out;
+        height: min-content;
+        cursor: text;
+    }
+    
+    &__input {
+        &::placeholder {
+            visibility: hidden;
+        }
+    
+        &:focus+.contact-box__label,
+        &:valid+.contact-box__label {
+            top: -16px;
+            font-size: $text-xsm;
+            background: #eaeef5;
+            
+        }
+    }
+}
+
+.btn-contacto {
+    @include button (map-get($colors, "trueblue"), transparent, map-get($colors, "offwhite"), 17px, map-get($colors, "trueblue"));
+    font-size: $text-s;
+    font-weight: 500;
+    margin: 10px auto 10px auto;
+}
