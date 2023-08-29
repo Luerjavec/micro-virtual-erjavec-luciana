@@ -1,5 +1,3 @@
-import './usuarios&ejercicios.js'
-
 // FIREBASE
 import { db, auth } from './firebaseAuth.js'
 

@@ -477,7 +477,7 @@ nav .offcanvas {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 490px;
+  height: 430px;
   width: 400px;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 25px;
@@ -510,7 +510,7 @@ nav .offcanvas {
     transform: translateX(-400px); }
 
 .registration-container.registrarse {
-  height: 570px;
+  height: 620px;
   transition: all .4s; }
   .registration-container.registrarse .form-box.login {
     transition: none;
