@@ -98,8 +98,7 @@ let randomPassword = 0;
 
 function recuperarContraseña() {
     const olvidarMail = document.querySelector("#olvidar-mail").value.toLowerCase();
-    //const usuarioExists = usuarios.some(u => u.email == olvidarMail);
-
+    
     // Admin SDK API to generate the password reset link.
     sendPasswordResetEmail(auth, olvidarMail)
         .then(() => {
@@ -178,7 +177,7 @@ function crearCuenta() {
                 await setDoc(doc(db, "usuarios", user.uid),
                     { nombre: registerNombre, perfil: registerPerfil, notas: [], ejercicios: [] });
 
-                //confirmacionEmail();
+                confirmacionEmail();
 
                 Swal.fire({
                     title: `Cuenta creada`,
@@ -194,8 +193,6 @@ function crearCuenta() {
             } else if (registerPerfil === "profesor") {
                 await setDoc(doc(db, "usuarios", user.uid),
                     { nombre: registerNombre, perfil: registerPerfil, authorized: false });
-
-                //confirmacionEmail();
 
                 Swal.fire({
                     title: `Cuenta creada`,
@@ -248,8 +245,6 @@ function crearCuenta() {
         });
 };
 
-
-//     usuarioToArray(registerPerfil, registerNombre, registerMail, registerPassword);
 
 // 3) Iniciar sesión: Si el usuario y contraseña son correctas, inicia sesión y guarda usuario para recuperarlo en dashboard
 
