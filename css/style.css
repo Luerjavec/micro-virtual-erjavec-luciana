@@ -477,7 +477,7 @@ nav .offcanvas {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 430px;
+  height: 520px;
   width: 400px;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 25px;
@@ -507,10 +507,23 @@ nav .offcanvas {
   .registration-container .form-box.olvidar {
     position: absolute;
     transition: none;
-    transform: translateX(-400px); }
+    transform: translateX(-400px);
+    color: #ffffff72; }
+  .registration-container .form-box .mensaje-alumnos {
+    color: #e5efffc2;
+    font-size: 0.8rem;
+    font-weight: 300;
+    text-align: center;
+    position: relative; }
+    .registration-container .form-box .mensaje-alumnos .info-icon {
+      position: absolute;
+      right: 15%;
+      font-size: 0.9rem;
+      color: #b9d3e9;
+      line-height: 30px; }
 
 .registration-container.registrarse {
-  height: 620px;
+  height: 570px;
   transition: all .4s; }
   .registration-container.registrarse .form-box.login {
     transition: none;
@@ -671,7 +684,8 @@ nav .offcanvas {
   font-size: 0.9rem;
   font-weight: 400;
   text-align: center;
-  margin: 15px 0 10px; }
+  margin: 15px 0 10px;
+  padding-top: 10px; }
   .login-register-olvidar p a {
     color: #d9edff;
     font-size: 0.9rem;
@@ -687,6 +701,9 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
   -webkit-text-fill-color: #77a0b1; }
 
 /********* DASHBOARD *********/
+.capitalize::first-letter {
+  text-transform: capitalize; }
+
 .swal2-popup {
   background: #dfdfdf;
   color: #0a2451; }
@@ -784,6 +801,34 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
     color: rgba(255, 255, 255, 0.84); }
 
 /* (1) Estilos para Dashboard -> EJERCICIOS */
+#crearBtn {
+  z-index: 10; }
+
+.swal2-input-password {
+  color: #0a2451;
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-sizing: border-box;
+  margin-top: 10px;
+  height: 40px;
+  width: 65%;
+  border-radius: 10px;
+  border: 2px solid #afafaf;
+  outline: none; }
+  .swal2-input-password:focus, .swal2-input-password:active, .swal2-input-password:hover {
+    border-color: #9993ff !important;
+    box-shadow: 0px 0px 0px #9ecaed;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-border-color: #9993ff;
+    -moz-border-color: #9993ff;
+    /* make it glow! */
+    -webkit-box-shadow: 0px 0px 10px #9ecaed;
+    -moz-box-shadow: 0px 0px 10px #9ecaed;
+    box-shadow: 0px 0px 10px #9ecaed;
+    /* some variation of blue for the shadow */ }
+
 #crear-btn button {
   background-color: transparent;
   border: 0;
@@ -904,15 +949,17 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
     justify-content: center;
     align-items: center;
     margin-left: -8px; }
-    .ejercicio-footer .btn-container .edit-btn, .ejercicio-footer .btn-container .delete-btn {
+    .ejercicio-footer .btn-container .edit-btn,
+    .ejercicio-footer .btn-container .delete-btn {
       margin-right: 1px;
       font-size: 1.8rem;
       border-radius: 0; }
     .ejercicio-footer .btn-container .edit-btn {
       border-bottom-left-radius: 13px; }
-    .ejercicio-footer .btn-container .delete-btn {
+    .ejercicio-footer .btn-container .password-btn {
       border-top-right-radius: 13px; }
-  .ejercicio-footer .ejercicio__btn, .ejercicio-footer .ejercicio__edit {
+  .ejercicio-footer .ejercicio__btn,
+  .ejercicio-footer .ejercicio__edit {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -924,9 +971,12 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
     gap: 1rem;
     padding: .3rem;
     transition: all .2s; }
-    .ejercicio-footer .ejercicio__btn .arrow, .ejercicio-footer .ejercicio__edit .arrow {
+    .ejercicio-footer .ejercicio__btn .arrow,
+    .ejercicio-footer .ejercicio__edit .arrow {
       transform: rotate(45deg); }
-    .ejercicio-footer .ejercicio__btn:hover, .ejercicio-footer .ejercicio__btn:active, .ejercicio-footer .ejercicio__edit:hover, .ejercicio-footer .ejercicio__edit:active {
+    .ejercicio-footer .ejercicio__btn:hover, .ejercicio-footer .ejercicio__btn:active,
+    .ejercicio-footer .ejercicio__edit:hover,
+    .ejercicio-footer .ejercicio__edit:active {
       background-color: transparent;
       border: 2px solid #7e95c5;
       color: #7e95c5; }
@@ -954,7 +1004,8 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
       background-color: rgba(255, 255, 255, 0.05);
       color: #9aadd6;
       font-weight: 600; }
-    .lista .table .col-titulo, .lista .table .col-notas {
+    .lista .table .col-titulo,
+    .lista .table .col-notas {
       width: 65%; }
 
 .accordion-header-profesor {
@@ -973,6 +1024,31 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
   font-weight: 400;
   background-color: transparent;
   border: 0;
+  cursor: pointer; }
+
+.autorizacion-form {
+  display: flex;
+  flex-direction: row;
+  gap: 30px; }
+
+#save-auth-btn {
+  color: #b9d3e9;
+  background-color: transparent;
+  border: 2px solid #b9d3e9;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: 0.2s;
+  padding: 6px 12px; }
+  #save-auth-btn:hover, #save-auth-btn:focus {
+    color: #0a2451;
+    background-color: #b9d3e9;
+    border: 2px solid transparent; }
+
+.auth, .auth:hover, .auth:active {
+  background-color: rgba(201, 247, 255, 0.708);
+  color: #0a2451;
+  font-weight: bold;
   cursor: pointer; }
 
 /* (3) Estilos para Dashboard -> CREAR EJERCICIO */

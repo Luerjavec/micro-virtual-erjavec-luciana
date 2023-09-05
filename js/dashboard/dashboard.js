@@ -13,7 +13,7 @@ import { auth, db } from '../firebaseAuth.js'
 import { doc, collection, getDocs, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 
 //let currUser = auth.currentUser;
-let user, userUid, userEmail, userName, userPerfil
+let user, userUid, userEmail, userName, userPerfil, isAdmin
 
 // setTimeout(() => {
 //     let currUser = auth.currentUser;
@@ -34,6 +34,8 @@ async function mainDashboard() {
 
             if (userFromFirestore.exists()) {
                 userPerfil = userFromFirestore.data().perfil;
+                isAdmin = userFromFirestore.data().isAdmin || false;
+                console.log(isAdmin)
             } else {
                 console.log("No such document!");
             }
@@ -86,7 +88,7 @@ function cerrarSesion() {
 
 function mostrarMenuLateral() {
     const account = document.querySelector(".account-name");
-    account.innerHTML = `<ion-icon name="person"></ion-icon> Sesión: ${userName}`;
+    account.innerHTML = `<ion-icon name="person"></ion-icon> Sesión: ${userName.charAt(0).toUpperCase() + userName.slice(1)}`;
     
     const inicio = document.querySelector("#inicio"); 
     inicio.innerHTML = '<ion-icon name="home"></ion-icon> Inicio';
@@ -95,9 +97,15 @@ function mostrarMenuLateral() {
     ejercicios.innerHTML = '<ion-icon name="extension-puzzle"></ion-icon> Ejercicios';
     
     const notasAlumnos = document.querySelector("#notas");
+    const autorizar = document.querySelector("#autorizar");
+
     userPerfil == "profesor" && (notasAlumnos.innerHTML = '<ion-icon name="people"></ion-icon> Mis Alumnos');
-    userPerfil == "alumno" && (notasAlumnos.innerHTML = '<ion-icon name="analytics"></ion-icon> Mis notas</button>');
+    userPerfil == "alumno" && (notasAlumnos.innerHTML = '<ion-icon name="analytics"></ion-icon> Mis notas');
     
+    if (isAdmin == true) {
+        autorizar.classList.remove("d-none")
+        autorizar.innerHTML = '<ion-icon name="people"></ion-icon> Autorizar cuentas'
+    }
 }
 
 
@@ -108,9 +116,11 @@ function bienvenida() {
     if (window.location.href.includes("dashboard-home.html") == true) {
         const bienvenida = document.querySelector("#bienvenida");
         const perfil = document.querySelector("#perfil");
+        //str + str.slice(1)
+        let mostrarPerfil = isAdmin === true ? "Administrador" : userPerfil.charAt(0).toUpperCase() + userPerfil.slice(1)
         
-        bienvenida.innerText = `¡Bienvenido al microscopio virtual ${userName}! `
-        perfil.innerText = `Perfil : ${userPerfil}`
+        bienvenida.innerText = `¡Bienvenido al microscopio virtual ${userName.charAt(0).toUpperCase() + userName.slice(1)}! `
+        perfil.innerText = `Perfil : ${mostrarPerfil}` 
     }
 }
 

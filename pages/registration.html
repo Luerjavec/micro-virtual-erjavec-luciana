@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="microscopio virtual, simulador virtual, práctica en línea, e-learning, iniciar sesion">
+    <meta name="keywords"
+        content="microscopio virtual, simulador virtual, práctica en línea, e-learning, iniciar sesion">
     <title>Simulador de microscopio virtual | Practica en línea y mejora tus habilidades</title>
     <link rel="shortcut icon" href="../media/favicon-MV.avif">
 
@@ -15,15 +16,15 @@
     <!-- Librería email.js -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">emailjs.init('BAUP8BhbDOZEfM42e')</script>
-    
+
     <!-- Librería luxon -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
-    
+
     <!-- FIREBASE ??? -->
-    
+
     <!-- Mis script -->
     <script src="../js/registration.js" type="module" defer></script>
-    
+
     <!-- Librería onscroll -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -70,7 +71,8 @@
                             <a class="nav-link" aria-current="Contacto" href="./contacto.html">Contacto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-login text-white" aria-current="Inicio sesion" href="./registration.html">Ingresar</a>
+                            <a class="nav-login text-white" aria-current="Inicio sesion"
+                                href="./registration.html">Ingresar</a>
                         </li>
                     </ul>
 
@@ -92,11 +94,12 @@
                     <form class="olvidar-form pt-3" action="#">
                         <div class="input-box">
                             <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                            <input id="olvidar-mail" class="input-box__input" placeholder="mail" type="text" name="olvidar-mail"
-                                aria-describedby="Email" required></input>
+                            <input id="olvidar-mail" class="input-box__input" placeholder="mail" type="text"
+                                name="olvidar-mail" aria-describedby="Email" required></input>
                             <label class="input-box__label" for="olvidar-mail">Mail</label>
-                            </div>
-                        <button type="submit" id="olvidar-button" class="btn btn-registration w-100">Recuperar contraseña</button>
+                        </div>
+                        <button type="submit" id="olvidar-button" class="btn btn-registration w-100">Recuperar
+                            contraseña</button>
                         <div class="login-register-olvidar">
                             <p>Conozco mi contraseña. <a href="#" class="login-back-link">Iniciar sesión</a></p>
                         </div>
@@ -121,7 +124,14 @@
                         <div class="forgot-password">
                             <a href="#" class="olvidar-link">Olvidé mi contraseña</a>
                         </div>
-                        <button type="submit" id="login-button" class="btn btn-registration w-100">Iniciar sesión</button>
+                        <button type="submit" id="login-button" class="btn btn-registration w-100">Iniciar
+                            sesión</button>
+                        <button type="button" id="login-google" class="btn btn-registration w-100"><ion-icon id="google"
+                                name="logo-google"></ion-icon> Ingresar con Google</button>
+                        <a href=# class="mensaje-alumnos">
+                            <p href="#"><i>Ingreso con google sólo alumnos </i>
+                                <ion-icon class="info-icon"name="information-circle-outline"></ion-icon></p>
+                        </a>
                         <div class="login-register-olvidar">
                             <p>¿No tienes una cuenta? <a href="#" class="register-link">Regístrate</a></p>
                         </div>
@@ -133,36 +143,36 @@
                     <form id="register-form" class="register-form pt-3" action="#">
                         <div class="input-box">
                             <span class="icon"><ion-icon name="person"></ion-icon></span>
-                            <input id="register-user" autocomplete="off" class="input-box__input" placeholder="usuario" type="text" name="register-user"
-                                aria-describedby="Usuario" required></input>
+                            <input id="register-user" autocomplete="off" class="input-box__input" placeholder="usuario"
+                                type="text" name="register-user" aria-describedby="Usuario" required></input>
                             <label class="input-box__label" for="register-user">Nombre</label>
                         </div>
                         <div class="input-box">
                             <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                            <input id="register-mail" class="input-box__input" placeholder="mail" type="email" name="register-mail"
-                                aria-describedby="Email" required></input>
+                            <input id="register-mail" class="input-box__input" placeholder="mail" type="email"
+                                name="register-mail" aria-describedby="Email" required></input>
                             <label class="input-box__label" for="email">Mail</label>
                         </div>
                         <div class="input-box">
                             <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                            <input id="register-password" class="input-box__input" placeholder="contraseña" type="password" name="register-password"
-                                aria-describedby="contraseña" required></input>
+                            <input id="register-password" class="input-box__input" placeholder="contraseña"
+                                type="password" name="register-password" aria-describedby="contraseña" required></input>
                             <label class="input-box__label" for="contraseña">Contraseña</label>
                         </div>
                         <div class="perfil">
                             <p>Tipo de perfil</p>
                             <div class="perfil-box">
                                 <div class="radio-box">
-                                    <input id="profesor" type="radio" name="perfil"
-                                        aria-describedby="profesor" value="profesor" required></input>
+                                    <input id="profesor" type="radio" name="perfil" aria-describedby="profesor"
+                                        value="profesor" required></input>
                                     <div class="label-box">
                                         <span class="label-box__icon"><ion-icon name="key"></ion-icon></span>
                                         <label class="label-box__label" for="profesor">Profesor</label>
                                     </div>
                                 </div>
                                 <div class="radio-box">
-                                    <input id="alumno" type="radio" name="perfil"
-                                        aria-describedby="alumno" value="alumno" required></input>
+                                    <input id="alumno" type="radio" name="perfil" aria-describedby="alumno"
+                                        value="alumno" required></input>
                                     <div class="label-box">
                                         <span class="label-box__icon"><ion-icon name="create"></ion-icon></span>
                                         <label class="label-box__label" for="alumno">Alumno</label>
@@ -170,8 +180,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" id="register-button" class="btn btn-registration w-100">Registrarme</button>
-                        <button type="button" id="login-google" class="btn btn-registration w-100"><ion-icon id="google" name="logo-google"></ion-icon> Ingresar con Google</button>
+                        <button type="submit" id="register-button"
+                            class="btn btn-registration w-100">Registrarme</button>
                         <div class="login-register-olvidar">
                             <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Iniciá sesión</a></p>
                         </div>

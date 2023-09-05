@@ -320,8 +320,8 @@ async function notaToArray() {
                     { notas: notas });
             }
             Swal.fire({
-                title: `${notaFinal}`,
-                text: `Nota enfoque: ${notaEnfoque}, Nota pregunta: ${notaPreguntas}. Nota final : ${notaFinal}`,
+                title: `Te sacaste un ${notaFinal}`,
+                html: `Nota enfoque: ${notaEnfoque}, Nota pregunta: ${notaPreguntas}. <br><b>Nota final: ${notaFinal}</b>`,
                 icon: 'success',
                 iconColor: '#0a5124',
                 confirmButtonText: 'OK'

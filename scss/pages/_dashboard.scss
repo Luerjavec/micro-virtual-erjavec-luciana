@@ -1,9 +1,14 @@
 /********* DASHBOARD *********/
 
+.capitalize::first-letter {
+    text-transform: capitalize;
+}
+
 .swal2-popup {
     background: rgb(223, 223, 223);
     color: (map-get($colors, "trueblue"));
 }
+
 .swal2-confirm {
     background-color: (map-get($colors, "trueblue")) !important;
 }
@@ -106,6 +111,41 @@
 
 /* (1) Estilos para Dashboard -> EJERCICIOS */
 
+#crearBtn {
+    z-index: 10;
+}
+
+.swal2-input-password {
+    @include font (#0a2451, 1.2rem, 600);
+    box-sizing: border-box;
+    margin-top: 10px;
+    height: 40px;
+    width: 65%;
+    border-radius: 10px;
+    border: 2px solid rgb(175, 175, 175);
+    outline: none;
+
+    &:focus,
+    &:active,
+    &:hover {
+        border-color: rgb(153, 147, 255) !important;
+        box-shadow: 0px 0px 0px #9ecaed;
+
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+
+        -webkit-border-color: rgb(153, 147, 255);
+        -moz-border-color: rgb(153, 147, 255);
+
+        /* make it glow! */
+        -webkit-box-shadow: 0px 0px 10px #9ecaed;
+        -moz-box-shadow: 0px 0px 10px #9ecaed;
+        box-shadow: 0px 0px 10px #9ecaed;
+        /* some variation of blue for the shadow */
+    }
+}
+
 #crear-btn {
     button {
         background-color: transparent;
@@ -202,12 +242,15 @@
         gap: 6px;
     }
 }
+
 .Venció {
     background-color: #fff8c3cd;
 }
+
 .Vence {
     background-color: rgb(126, 149, 197);
 }
+
 .ejercicio-footer {
     @include flex(row, space-between, center);
     padding: 0;
@@ -226,7 +269,8 @@
         @include flex (row, center, center);
         margin-left: -8px;
 
-        & .edit-btn, .delete-btn {
+        & .edit-btn,
+        .delete-btn {
             margin-right: 1px;
             font-size: 1.8rem;
             border-radius: 0;
@@ -236,13 +280,14 @@
             border-bottom-left-radius: 13px;
         }
 
-        & .delete-btn {
+        & .password-btn {
             border-top-right-radius: 13px;
         }
 
     }
 
-    & .ejercicio__btn, .ejercicio__edit {
+    & .ejercicio__btn,
+    .ejercicio__edit {
         @include flex (null, center, center);
         @include font (#1f1f3e, 1.8rem, 600);
         border: 2px solid transparent;
@@ -294,7 +339,8 @@
             font-weight: 600;
         }
 
-        .col-titulo, .col-notas {
+        .col-titulo,
+        .col-notas {
             width: 65%;
         }
     }
@@ -308,13 +354,35 @@
     padding: 0 10px 10px 0;
     background-color: rgba(12, 12, 25, 0);
     @include font (map-get($colors, "light"), $text-sm, 400);
-    
+
 }
 
 .notas {
     @include font (white, $text-s, 400);
     background-color: transparent;
     border: 0;
+    cursor: pointer;
+}
+
+
+.autorizacion-form {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+#save-auth-btn {
+    @include button (map-get($colors, "lightsalmon"), transparent, map-get($colors, "trueblue"), 10px);
+    font-size: ($text-m - 0.5rem);
+    font-weight: bold;
+    transition: 0.2s;
+    padding: 6px 12px;
+}
+
+.auth, .auth:hover, .auth:active {
+    background-color: rgba(201, 247, 255, 0.708);
+    color: #0a2451;
+    font-weight: bold;
     cursor: pointer;
 }
 

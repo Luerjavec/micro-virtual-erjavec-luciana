@@ -6,9 +6,9 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.2.0/fi
 
 //Iniciar sesión con mail o google
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
-import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
+import { sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 
-import { doc, setDoc, } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
+import { doc, collection, setDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 
 // Chequea si está registrado
 
@@ -31,6 +31,19 @@ const loginGoogle = document.querySelector("#login-google");
 const loginLink = document.querySelector(".login-link");
 const loginBackLink = document.querySelector(".login-back-link");
 const registerLink = document.querySelector(".register-link");
+const msjAlumnos = document.querySelector(".mensaje-alumnos");
+
+msjAlumnos.addEventListener("click", (e) => {
+    e.preventDefault()
+    Swal.fire({
+        title: `<h2 style='color:#0a2451'>El inicio con google es sólo para alumnos </h2>`,
+        html: `<h5 style='color:#0a2451'>Si sos profe, creá una cuenta nueva con mail y contraseña y comunicate con nosotros para que la aprobemos (mvffybregister@gmail.com)</h5>`,
+        icon: 'warning',
+        iconColor: '#6a1635',
+        color: '#ffffff7b',
+        confirmButtonText: 'Entendido'
+    })
+});
 
 registerLink.addEventListener("click", () => {
     registrationContainer.classList.add("registrarse");
@@ -85,32 +98,10 @@ let randomPassword = 0;
 
 function recuperarContraseña() {
     const olvidarMail = document.querySelector("#olvidar-mail").value.toLowerCase();
-    const usuarioExists = usuarios.some(u => u.email == olvidarMail);
+    //const usuarioExists = usuarios.some(u => u.email == olvidarMail);
 
-    if (usuarioExists == false) {
-        Swal.fire({
-            title: `Mail no registrado`,
-            text: `El mail ${olvidarMail} no se encuentra registrado`,
-            icon: 'warning',
-            iconColor: '#6a1635',
-            confirmButtonText: 'OK'
-        })
-    } else {
-        randomPassword = Math.random().toString(36).slice(2, 10);
-        const indexUs = usuarios.findIndex(u => u.email == olvidarMail);
-        usuarios[indexUs].password = randomPassword;
-        localStorage.setItem("usuariosMV", JSON.stringify(usuarios));
-        recuperacionEmail();
-    }
-};
-
-function recuperacionEmail() {
-    const mailRecuperar = document.querySelector("#olvidar-mail").value.toLowerCase();
-    const templateParams = { olvidarMail: mailRecuperar, newPassword: randomPassword };
-    const serviceID = 'default_service';
-    const templateID = 'template_y06zeh9';
-
-    emailjs.send(serviceID, templateID, templateParams)
+    // Admin SDK API to generate the password reset link.
+    sendPasswordResetEmail(auth, olvidarMail)
         .then(() => {
             Swal.fire({
                 title: `Código enviado`,
@@ -121,19 +112,30 @@ function recuperacionEmail() {
             }).then(result => {
                 if (result.isConfirmed) {
                     olvidarForm.reset();
+                    btnOlvidar.innerText = 'Recuperar contraseña';
                 }
             })
-            btnOlvidar.innerText = 'Recuperar contraseña';
-        }, (err) => {
-            btnOlvidar.innerText = 'Recuperar contraseña';
-            Swal.fire({
-                title: `Error`,
-                text: `Ocurrió un error. Intenta de nuevo más tarde.`,
-                icon: 'error',
-                iconColor: 'red',
-                confirmButtonText: 'OK'
-            })
+        })
+        .catch((error) => {
+            if (error.code == "auth/user-not-found") {
+                Swal.fire({
+                    title: `Mail no registrado`,
+                    text: `El mail ${olvidarMail} no se encuentra registrado`,
+                    icon: 'warning',
+                    iconColor: '#6a1635',
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.fire({
+                    title: `Error`,
+                    text: `Ocurrió un error. Intenta de nuevo más tarde.`,
+                    icon: 'error',
+                    iconColor: 'red',
+                    confirmButtonText: 'OK'
+                })
+            }
         });
+    btnOlvidar.innerText = 'Recuperar contraseña';
 }
 
 
@@ -156,8 +158,6 @@ function confirmacionEmail() {
         });
 }
 
-//cuenta inicial
-
 
 function crearCuenta() {
     const registerNombre = document.querySelector("#register-user").value.toLowerCase();
@@ -174,21 +174,41 @@ function crearCuenta() {
                 console.log("nombre creado")
             }).catch((error) => { console.log(error) });
 
-            await setDoc(doc(db, "usuarios", user.uid), { nombre: registerNombre, perfil: registerPerfil, notas: [] });
+            if (registerPerfil === "alumno") {
+                await setDoc(doc(db, "usuarios", user.uid),
+                    { nombre: registerNombre, perfil: registerPerfil, notas: [], ejercicios: [] });
 
-            //confirmacionEmail();
+                //confirmacionEmail();
 
-            Swal.fire({
-                title: `Cuenta creada`,
-                text: `Listo ${registerNombre}, ya podés usar tu cuenta para iniciar sesión. Te enviamos un mail de bienvenida`,
-                icon: 'success',
-                iconColor: '#0a5124',
-                confirmButtonText: 'OK'
-            }).then(result => {
-                if (result.isConfirmed) {
-                    registerForm.reset();
-                }
-            })
+                Swal.fire({
+                    title: `Cuenta creada`,
+                    text: `Listo ${registerNombre}, ya podés usar tu cuenta para iniciar sesión. Te enviamos un mail de bienvenida`,
+                    icon: 'success',
+                    iconColor: '#0a5124',
+                    confirmButtonText: 'OK'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        registerForm.reset();
+                    }
+                })
+            } else if (registerPerfil === "profesor") {
+                await setDoc(doc(db, "usuarios", user.uid),
+                    { nombre: registerNombre, perfil: registerPerfil, authorized: false });
+
+                //confirmacionEmail();
+
+                Swal.fire({
+                    title: `Cuenta creada`,
+                    text: `${registerNombre}, tu cuenta de profesor debe ser aprobada. Te enviaremos un mail cuando sea chequeada`,
+                    icon: 'success',
+                    iconColor: '#0a5124',
+                    confirmButtonText: 'OK'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        registerForm.reset();
+                    }
+                })
+            }
         })
         .catch((error) => {
             console.log(error)
@@ -238,11 +258,25 @@ function iniciarSesion() {
     const loginPassword = document.querySelector("#login-password").value;
 
     signInWithEmailAndPassword(auth, loginMail, loginPassword)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            sessionStorage.setItem("sesionMV", JSON.stringify(user)); /////////////////////////
-            window.location = "./dashboard/dashboard-home.html";
+            const userFirebase = await getDoc(doc(db, "usuarios", user.uid));
+            const isAuthorized = userFirebase.data().authorized
+
+            if (userFirebase.data().perfil === "alumno") {
+                window.location = "./dashboard/dashboard-home.html";
+            } else if (userFirebase.data().perfil === "profesor" && isAuthorized === true) {
+                window.location = "./dashboard/dashboard-home.html";
+            } else if (userFirebase.data().perfil === "profesor" && isAuthorized === false) {
+                Swal.fire({
+                    title: `No autorizado`,
+                    text: `Tu perfil profesor aún no fue autorizado. Pronto recibirás noticias de nuestro equipo.`,
+                    icon: 'error',
+                    iconColor: 'red',
+                    confirmButtonText: 'OK'
+                })
+            }
         })
         .catch((error) => {
             console.log(error)
@@ -275,19 +309,43 @@ function iniciarSesion() {
 };
 
 
-// 4) Iniciar sesión con Google
+// 4) Iniciar sesión con Google + crear cuenta
 
 function iniciarSesionGoogle() {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
             // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
+            const credential = await GoogleAuthProvider.credentialFromResult(result);
             const user = result.user;
-            const userName = user.displayName;
+
+            //Buscamos si es un usuario existente o si es uno nuevo
+            let userExists
+            await usuarioExiste(user.uid)
+                .then((res) => { userExists = res })
+                .catch((err) => console.log(err))
+
+            console.log(userExists)
+
+            if (userExists === true) {
+                window.location = "./dashboard/dashboard-home.html";
+            } else {
+                //creamos el usuario en el firestore (cambiar perfiL!)
+                await setDoc(doc(db, "usuarios", user.uid), { nombre: user.displayName, perfil: "alumno", notas: [] });
+
+                Swal.fire({
+                    title: `Cuenta creada`,
+                    text: `Listo ${user.displayName}, ya podés usar tu cuenta para iniciar sesión con google. Te enviamos un mail de bienvenida`,
+                    icon: 'success',
+                    iconColor: '#0a5124',
+                    confirmButtonText: 'OK'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        registerForm.reset();
+                    }
+                })
+            }
 
             // IdP data available using getAdditionalUserInfo(result)
             // ...
@@ -303,6 +361,16 @@ function iniciarSesionGoogle() {
         });
 
 };
+
+//Buscamos si es un usuario existente o si es uno nuevo
+async function usuarioExiste(uid) {
+    const user = await getDoc(doc(db, "usuarios", uid));
+    const userExists = user.data() == undefined ? false : true
+    return userExists
+}
+
+
+// Chequeo si inició sesión antes
 
     // if (userExists == true && usuarios[indexUs].password == loginPassword) {
     //     sessionStorage.setItem("sesionMV", JSON.stringify(indexUs));

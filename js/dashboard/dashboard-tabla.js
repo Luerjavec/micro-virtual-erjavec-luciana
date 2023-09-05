@@ -9,8 +9,10 @@ import { doc, getDoc, getDocs, collection, } from "https://www.gstatic.com/fireb
 
 let actualUser, userPerfil, alumnos, userUid
 const usuario = []
+let ejUnidos
 const users = []
 const ejercicios = []
+const ejerciciosUID = []
 
 async function cargarUsuarios() {
     const usu = await getDocs(collection(db, "usuarios"));
@@ -23,16 +25,17 @@ async function cargarUsuarios() {
 async function cargarEjercicios() {
     const ejerciciosSnapshot = await getDocs(collection(db, "ejercicios"));
     await ejerciciosSnapshot.forEach(async ejercicio => {
-            ejercicios.push({
-                id: ejercicio.id,
-                titulo: ejercicio.data().titulo,
-                vencimiento: ejercicio.data().vencimiento,
-                imagen: ejercicio.data().imagen,
-                diafragma: ejercicio.data().diafragma,
-                voltimetro: ejercicio.data().voltimetro,
-                enfoque: ejercicio.data().enfoque,
-                preguntas: ejercicio.data().preguntas,
-            });
+        ejerciciosUID.push(ejercicio.id)
+        ejercicios.push({
+            id: ejercicio.id,
+            titulo: ejercicio.data().titulo,
+            vencimiento: ejercicio.data().vencimiento,
+            imagen: ejercicio.data().imagen,
+            diafragma: ejercicio.data().diafragma,
+            voltimetro: ejercicio.data().voltimetro,
+            enfoque: ejercicio.data().enfoque,
+            preguntas: ejercicio.data().preguntas,
+        });
     })
 }
 
@@ -65,42 +68,60 @@ function crearTabla(headers) {
 
 function tableBodyAlumno() {
     let tags = "";
-    ejercicios.map(ej => {
-        let titulo = ej.titulo
-        let id = ej.id
-        let num = ejercicios.findIndex(ejer => ejer.titulo === titulo)
-
-        const intento = usuario[0].notas.filter(e => e.id === id);
-        intento.length === 0 && (intento.push({ nota: "Incompleto" }));
-        let nota = intento[0].nota
-        
+    const ejerciciosOK = ejerciciosUID.filter(element => ejUnidos.includes(element));
+    if (ejerciciosOK.length === 0) {
         tags += `<tr>
+            <td></td>
+            <td class="col-titulo"><ion-icon name="warning"></ion-icon> No estás unido a ningún ejercicio</td>
+            <td></td>
+        </tr>`;
+    } else {
+        ejercicios.map(ej => {
+            if (ejerciciosOK.includes(ej.id) === true) {
+                let titulo = ej.titulo
+                let id = ej.id
+                let num = ejercicios.findIndex(ejer => ejer.titulo === titulo)
+
+                const intento = usuario[0].notas.filter(e => e.id === id);
+                intento.length === 0 && (intento.push({ nota: "Incompleto" }));
+                let nota = intento[0].nota
+
+                tags += `<tr>
                 <td>${num + 1}</td>
                 <td class="col-titulo">${ej.titulo}</td>
                 <td>${nota || "Incompleto"}</td>
             </tr>`;
-    })
+            }
+        })
+    }
     tableBody.innerHTML = tags;
 }
 
 function tableBodyProfe() {
     let tags = "";
-    alumnos.map(u => {
-        const numero = users.findIndex(i => i == u) + 1
-        let notas = u.notas.map(n => n.nota);
-        let promedio;
-        if (u.perfil == "alumno") {
-            promedio = notas.reduce((a, b) => a + b, 0) / u.notas.length || "-";
-        } else {
-            promedio = "-"
-        }
-
-        let notasDetalle = "";
-        for (let i = 0; i < ejercicios.length; i++) {
-            notasDetalle += `<p>${i + 1}) ${ejercicios[i].titulo}. || Nota: ${notas[i] || "Incompleto"}`;
-        }
-
+    if (alumnos.length === 0) {
         tags += `<tr>
+            <td></td>
+            <td class="col-titulo"><ion-icon name="warning"></ion-icon> No tenés ningún alumno</td>
+            <td></td>
+        </tr>`;
+    } else {
+        alumnos.map(u => {
+            const numero = users.findIndex(i => i == u) + 1
+            let notas = u.notas.map(n => n.nota);
+            let promedio;
+            if (u.perfil == "alumno") {
+                promedio = notas.reduce((a, b) => a + b, 0) / u.notas.length || "-";
+            } else {
+                promedio = "-"
+            }
+
+            let notasDetalle = "";
+            for (let i = 0; i < ejercicios.length; i++) {
+                notasDetalle += `<p>${i + 1}) ${ejercicios[i].titulo}. || Nota: ${notas[i] || "Incompleto"}`;
+            }
+
+            tags += `<tr>
                 <td>${numero}</td>
                 <td>${u.nombre}</td>
                 <td class="col-notas">
@@ -118,7 +139,8 @@ function tableBodyProfe() {
                 </div>
                 </td>
             </tr>`;
-    })
+        })
+    }
     tableBody.innerHTML = tags;
 }
 
@@ -132,12 +154,14 @@ async function mainTabla() {
         usuario.push(userFromFirestore.data())
         userPerfil = usuario[0].perfil;
         userUid = user.uid
+        ejUnidos = (usuario[0].ejercicios);
         await cargarEjercicios()
+
         userPerfil == "profesor" && await cargarUsuarios()
 
         setTimeout(() => {
             crearTabla(headers);
-        }, 2000); 
+        }, 2000);
     })
 }
 

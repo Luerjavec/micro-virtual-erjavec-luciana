@@ -12,7 +12,7 @@
 .registration-container {
     @include flex (null, center, center);
     position: relative;
-    height: 430px;
+    height: 520px;
     width: 400px;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 25px;
@@ -48,12 +48,26 @@
     &.olvidar {
         position: absolute;
         transition: none;
-        transform: translateX(-400px)
+        transform: translateX(-400px);
+        color: #ffffff72;
+    }
+
+    & .mensaje-alumnos {
+        @include font (#e5efffc2, $text-xsm, 300);
+        text-align: center;
+        position: relative;
+        & .info-icon {
+            position: absolute;
+            right: 15%;
+            font-size: $text-sm;
+            color: map-get($colors, "truesalmon");
+            line-height: 30px;
+        }
     }
 }
 
 .registration-container.registrarse {
-    height: 620px;
+    height: 570px;
     transition: all .4s;
 
     .form-box.login {
@@ -239,6 +253,7 @@
     @include font (map-get($colors, "truesalmon"), $text-sm, 400);
     text-align: center;
     margin: 15px 0 10px;
+    padding-top: 10px;
 
     p a {
         @include font (map-get($colors, "accentcolor"), $text-sm, 600);

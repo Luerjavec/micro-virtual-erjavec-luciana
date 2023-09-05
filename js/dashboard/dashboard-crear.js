@@ -8,8 +8,7 @@ const now = DateTime.now();
 
 import { auth, db, storage } from '../firebaseAuth.js'
 import './dashboard.js'
-import { doc, addDoc, setDoc, query, where, updateDoc, getDocs, collection, Timestamp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
-
+import { doc, addDoc, setDoc, query, where, updateDoc, getDoc, getDocs, collection, Timestamp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 import { ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-storage.js";
 
 
@@ -46,8 +45,8 @@ import { ref, uploadString, getDownloadURL } from "https://www.gstatic.com/fireb
 // Buscamos si en la pág anterior se eligió crear o editar un ejercicio
 
 const accion = JSON.parse(sessionStorage.getItem("accionEjercicios"));
-const numEjer = JSON.parse(sessionStorage.getItem("ejercicioElegido"));
-const ejercicio = ejercicios[numEjer]
+const idEjercicio = JSON.parse(sessionStorage.getItem("ejercicioElegido"));
+let ejercicio, imagen;
 const previewImg = document.querySelector(".preview-img img");
 
 /********* Interacción con el DOM - parte derecha: Carga de imagen *********/
@@ -64,11 +63,26 @@ function loadImage() {
     reader.addEventListener("load", (e) => {
         e.preventDefault();
         try {
-            sessionStorage.setItem("imagen", reader.result); //contenido del archivo pasado a base64
-            previewImg.className = "visible";
-            previewImg.src = reader.result;
+            const imgLength = reader.result.length - 'data:image/png;base64,'.length;
+            const sizeInBytes = 4 * Math.ceil((imgLength / 3)) * 0.5624896334383812;
+            const sizeInKb = sizeInBytes / 1000;
+            if (sizeInKb > 6000) {
+                Swal.fire({
+                    title: `Imagen demasiado grande`,
+                    html: `La imagen pesa ${Math.round((sizeInKb / 1000) * 100) / 100} MB. El máximo admitido es de 6 MB`,
+                    icon: 'warning',
+                    iconColor: '#6a1635',
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                sessionStorage.setItem("imagen", reader.result); //contenido del archivo pasado a base64
+                previewImg.className = "visible";
+                previewImg.src = reader.result;
+            }
 
-        } catch {
+
+        } catch (error) {
+            console.log(error)
             Swal.fire({
                 title: `Sin espacio`,
                 text: `No hay espacio para subir más imágenes. Elimine un ejercicio antes de crear uno nuevo`,
@@ -80,7 +94,6 @@ function loadImage() {
             })
         }
     })
-
     file && reader.readAsDataURL(file);
 }
 
@@ -101,7 +114,20 @@ const opc3 = document.querySelector("#nueva-opc3");
 
 // 2) Si está editando el ejercicio, mostramos el formulario ya completo con los datos previos del ejercicio.
 
-function mostrarEditarEjercicio() {
+async function mostrarEditarEjercicio() {
+    const ejercicioSnapshot = await getDoc(doc(db, "ejercicios", idEjercicio));
+    ejercicio = ejercicioSnapshot.data()
+
+    await getDownloadURL(ref(storage, (idEjercicio + ".avif")))
+        .then((url) => {
+            imagen = url;
+            previewImg.src = imagen
+        })
+        .catch((error) => {
+            imagen = (idEjercicio + ".avif")
+            console.log(error)
+        });
+
     crearBtn.innerHTML = "Editar ejercicio";
     crearTitle.innerHTML = "Editar ejercicio";
     nuevoTitulo.value = ejercicio.titulo;
@@ -111,7 +137,6 @@ function mostrarEditarEjercicio() {
     opc2.value = ejercicio.preguntas[0].opc2;
     opc3.value = ejercicio.preguntas[0].opc3;
     previewImg.className = "visible";
-    previewImg.src = ejercicio.imagen.includes("base64") ? ejercicio.imagen : `../../media/ejercicios/${ejercicio.imagen}`;
 }
 
 // 3) Al tocar submit:
@@ -120,22 +145,38 @@ function mostrarEditarEjercicio() {
 
 function editarEjercicio() {
     const form = document.querySelector(".crear-form")
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const nuevaImagen = sessionStorage.getItem("imagen");
+        crearBtn.innerHTML = "Editando...";
         const fecha = document.querySelector("#nuevo-vencimiento").value;
-        const nuevoVencimiento = DateTime.fromISO(fecha);
+        const fechaConvert = new Date(fecha).getTime()
+        const nuevoVencimiento = Timestamp.fromMillis(fechaConvert)
+        const nuevaImagen = sessionStorage.getItem("imagen");
+        const imageName = idEjercicio + ".avif"
+        const imageRef = await ref(storage, imageName);
 
-        ejercicio.titulo = nuevoTitulo.value;
-        ejercicio.vencimiento = nuevoVencimiento;
-        ejercicio.preguntas[0].pregunta = nuevaPregunta.value;
-        ejercicio.preguntas[0].opc1 = opc1.value;
-        ejercicio.preguntas[0].opc2 = opc2.value;
-        ejercicio.preguntas[0].opc3 = opc3.value;
-        ejercicio.imagen = nuevaImagen || ejercicio.imagen;
+        await updateDoc(doc(db, "ejercicios", idEjercicio), {
+            titulo: nuevoTitulo.value,
+            imagen: "img",
+            diafragma: 100,
+            enfoque: 0,
+            voltimetro: 100,
+            vencimiento: nuevoVencimiento,
+            imagen: imageName,
+            preguntas: [{
+                pregunta: nuevaPregunta.value,
+                opc1: opc1.value,
+                opc2: opc2.value,
+                opc3: opc3.value
+            }]
+        });
 
-        localStorage.setItem("ejerciciosMV", JSON.stringify(ejercicios));
-        sessionStorage.removeItem('imagen');
+        if (nuevaImagen !== null) {
+            await uploadString(imageRef, nuevaImagen, 'data_url').then((snapshot) => {
+                alert('Uploaded');
+            });
+        }
+
         window.location = "dashboard-ejercicios.html";
     });
 }
@@ -143,16 +184,16 @@ function editarEjercicio() {
 function crearEjercicio() {
     const form = document.querySelector(".crear-form");
     form.addEventListener("submit", async (e) => {
+        crearBtn.innerHTML = "Creando...";
         e.preventDefault();
         const nuevaImagen = sessionStorage.getItem("imagen");
         const fecha = document.querySelector("#nuevo-vencimiento").value;
-        const prueba = new Date(fecha).getTime()
-        const nuevoVencimiento = Timestamp.fromMillis(prueba)
+        const fechaConvert = new Date(fecha).getTime()
+        const nuevoVencimiento = Timestamp.fromMillis(fechaConvert)
 
         const docRef = await addDoc(collection(db, "ejercicios"), {
             titulo: nuevoTitulo.value,
             imagen: "img",
-            password: "123",
             diafragma: 100,
             enfoque: 0,
             voltimetro: 100,
@@ -172,6 +213,7 @@ function crearEjercicio() {
         await updateDoc(doc(db, "ejercicios", docRef.id),
             { imagen: imageName });
 
+        // límite de imagen para que sea menor a 8mb
         await uploadString(imageRef, imagen, 'data_url').then((snapshot) => {
             console.log('Uploaded');
         });
@@ -188,7 +230,8 @@ function crearEjercicio() {
         sessionStorage.removeItem('imagen');
         Swal.fire({
             title: `Ejercicio creado`,
-            text: ``,
+            html: `<h5 style='color:#0a2451'>Creaste el ejercicio con la contraseña <b><u>${docRef.id}</u></b></h5>
+            <h5 style='color:#0a2451'>Envíales la contraseña a tus alumnos para que se unan!</h5>`,
             icon: 'success',
             iconColor: 'green',
             confirmButtonText: 'OK'
@@ -200,6 +243,9 @@ function crearEjercicio() {
 
 
 // Toma de decisiones según si se está editando o creando
+async function mainCrearEditar() {
+    accion.includes("editar") && mostrarEditarEjercicio();
+    accion.includes("editar") ? editarEjercicio() : crearEjercicio();
+}
 
-accion.includes("editar") && mostrarEditarEjercicio();
-accion.includes("editar") ? editarEjercicio() : crearEjercicio();
+mainCrearEditar()
