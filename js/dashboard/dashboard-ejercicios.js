@@ -289,7 +289,7 @@ async function mainEjercicios() {
             
             if (ejUnidos !== undefined) {
                 await mostrarEjercicios()
-            } else if (ejunidos == undefined) {
+            } else if (ejUnidos == undefined) {
                 contenedorDashboard.innerHTML += `
                     <div class="ejercicio"><h5 class="sin-ejercicios"><ion-icon name="alert-circle"></ion-icon> No estás unido a ningún ejercicio. Si no te unís a un ejercicio en los próximos 10 días, tu cuenta será eliminada.</h5>
                 </div>`;
