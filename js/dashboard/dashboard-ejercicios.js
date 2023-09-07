@@ -281,15 +281,22 @@ async function mainEjercicios() {
             crearDiv.classList.add("visible")
         };
 
-        userPerfil === "profesor" && await cargarUsuarios()
+        userPerfil === "profesor" && await cargarUsuarios();
 
+        (userPerfil === "profesor" || ejUnidos !== undefined) && await mostrarEjercicios()
 
-        await mostrarEjercicios()
+        setTimeout(() => {
+            (userPerfil === "alumno" || ejUnidos !== undefined) && unirseEjercicio()
+        }, 1500);
 
-        setTimeout(() => { userPerfil === "alumno" && unirseEjercicio() }, 1500);
+        if (userPerfil === "alumno" && ejUnidos !== undefined) {
+            contenedorDashboard.innerHTML += `
+            <div class="ejercicio"><h5 class="sin-ejercicios"><ion-icon name="alert-circle"></ion-icon> No estás unido a ningún ejercicio. Si no te unís a un ejercicio en los próximos 10 días, tu cuenta será eliminada.</h5>
+            </div>`;
+        }
+
         setTimeout(() => {
             userPerfil == "profesor" && (editarEliminarEjercicio(), crearEjercicio());
-            //userPerfil == "profesor" && crearEjercicio();
         }, 1500);
 
         setTimeout(() => { visualizarEjercicio() }, 1500);;

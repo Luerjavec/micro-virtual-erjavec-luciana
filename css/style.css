@@ -984,6 +984,12 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
     border-radius: 13px 0 13px 0;
     margin-right: -8px; }
 
+.sin-ejercicios {
+  color: #fff8c3cd;
+  font-size: 1.4rem;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif; }
+
 /* (2) Estilos para Dashboard -> TABLA (Notas, alumnos) */
 .lista {
   width: 59vw;
@@ -1074,17 +1080,21 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
 
 .crear-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 100%; }
-  .crear-container__datos, .crear-container__ajustes {
+  width: 100%;
+  max-width: 900px; }
+  .crear-container__ajustes {
+    height: 550px; }
+  .crear-container__datos, .crear-container__ajustes, .crear-container__preguntas {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    margin: 10px;
     position: relative;
-    height: 550px;
+    width: 100%;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 25px;
     backdrop-filter: blur(12px);
@@ -1093,11 +1103,17 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
     background-color: rgba(255, 255, 255, 0.032);
     transition: all .4s;
     overflow: hidden; }
-    .crear-container__datos h5, .crear-container__ajustes h5 {
+    .crear-container__datos .box-container, .crear-container__ajustes .box-container, .crear-container__preguntas .box-container {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: space-around; }
+    .crear-container__datos h5, .crear-container__ajustes h5, .crear-container__preguntas h5 {
       padding-top: 20px;
       margin: 0;
       color: #77a0b1; }
-    .crear-container__datos .register-form, .crear-container__ajustes .register-form {
+    .crear-container__datos .register-form, .crear-container__ajustes .register-form, .crear-container__preguntas .register-form {
       width: 80%; }
   .crear-container .choose-img {
     background-color: #6C757D;
@@ -1115,12 +1131,6 @@ input:-webkit-autofill:focus, input:-webkit-autofill:active {
       object-fit: contain; }
       .crear-container .preview-img img.visible {
         visibility: visible; }
-
-.crear-container__datos {
-  width: 37%; }
-
-.crear-container__ajustes {
-  width: 60%; }
 
 input[type="date"] {
   color: transparent;
@@ -1140,7 +1150,30 @@ input[type="date"] {
   display: none; }
 
 #crear-ejercicio-button {
-  margin: 30px; }
+  margin: 30px;
+  width: 100%;
+  max-width: 900px;
+  font-size: 1.4rem; }
+
+#agregar-pregunta-btn {
+  align-self: center;
+  justify-self: center;
+  color: #b9d3e9;
+  background-color: transparent;
+  border: 2px solid #b9d3e9;
+  border-radius: 40px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  transition: 0.2s;
+  padding: 7px 16px;
+  margin: 10px; }
+  #agregar-pregunta-btn:hover, #agregar-pregunta-btn:focus {
+    color: #0a2451;
+    background-color: #b9d3e9;
+    border: 2px solid transparent; }
+  @media (min-width: 768px) {
+    #agregar-pregunta-btn {
+      font-size: 1.4rem; } }
 
 /********* PLATAFORMA *********/
 .small-devices-msj {

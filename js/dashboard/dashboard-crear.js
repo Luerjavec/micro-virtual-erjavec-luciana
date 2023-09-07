@@ -173,7 +173,6 @@ function editarEjercicio() {
 
         if (nuevaImagen !== null) {
             await uploadString(imageRef, nuevaImagen, 'data_url').then((snapshot) => {
-                alert('Uploaded');
             });
         }
 

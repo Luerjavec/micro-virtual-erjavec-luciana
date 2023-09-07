@@ -314,6 +314,10 @@
     }
 }
 
+.sin-ejercicios {
+    @include font (#fff8c3cd, $text-m, 300, $font1);
+}
+
 /* (2) Estilos para Dashboard -> TABLA (Notas, alumnos) */
 
 .lista {
@@ -407,14 +411,19 @@
 }
 
 .crear-container {
-    @include flex (row, space-around, center);
+    @include flex (column, space-around, center);
     width: 100%;
+    max-width: 900px;
 
-    &__datos,
     &__ajustes {
-        @include flex (column, space-around, center);
-        position: relative;
         height: 550px;
+    }
+    &__datos,
+    &__ajustes, &__preguntas {
+        @include flex (column, space-around, center);
+        margin: 10px;
+        position: relative;
+        width: 100%;
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 25px;
         backdrop-filter: blur(12px);
@@ -423,6 +432,11 @@
         background-color: rgba(255, 255, 255, 0.032);
         transition: all .4s;
         overflow: hidden;
+
+        & .box-container {
+            width: 80%;
+            @include flex (column, space-around, space-around)
+        }
 
         & h5 {
             padding-top: 20px;
@@ -458,13 +472,13 @@
     }
 }
 
-.crear-container__datos {
-    width: 37%;
-}
+// .crear-container__datos {
+//     width: 37%;
+// }
 
-.crear-container__ajustes {
-    width: 60%;
-}
+// .crear-container__ajustes {
+//     width: 60%;
+// }
 
 input[type="date"] {
     color: transparent;
@@ -494,4 +508,22 @@ input[type="date"] {
 
 #crear-ejercicio-button {
     margin: 30px;
+    width: 100%;
+    max-width: 900px;
+    font-size: $text-m;
+}
+
+#agregar-pregunta-btn {
+    align-self: center;
+    justify-self: center;
+    @include button (map-get($colors, "lightsalmon"), transparent, map-get($colors, "trueblue"), 40px);
+    font-size: ($text-m);
+    font-weight: bold;
+    transition: 0.2s;
+    padding: 7px 16px;
+    margin: 10px;
+
+    @include tablet {
+        font-size: $text-m;
+    }
 }

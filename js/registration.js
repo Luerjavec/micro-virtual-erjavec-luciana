@@ -331,7 +331,7 @@ function iniciarSesionGoogle() {
 
                 Swal.fire({
                     title: `Cuenta creada`,
-                    text: `Listo ${user.displayName}, ya podés usar tu cuenta para iniciar sesión con google. Te enviamos un mail de bienvenida`,
+                    text: `Listo ${user.displayName}, ya podés usar tu cuenta para iniciar sesión con google.`,
                     icon: 'success',
                     iconColor: '#0a5124',
                     confirmButtonText: 'OK'
