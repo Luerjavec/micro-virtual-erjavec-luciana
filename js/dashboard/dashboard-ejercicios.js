@@ -274,32 +274,47 @@ async function mainEjercicios() {
             crearBtn.innerHTML = '<ion-icon name="add-circle-outline"></ion-icon><p class="ejercicio__tiempo">Crear nuevo ejercicio</p>'
             crearBtn.classList.add("crear")
             crearDiv.classList.add("visible")
+            await cargarUsuarios();
+            await mostrarEjercicios()
+            setTimeout(() => {
+                userPerfil == "profesor" && (editarEliminarEjercicio(), crearEjercicio());
+            }, 1500);
 
-        } else {
+            
+        } else if (userPerfil == "alumno"){
             crearBtn.innerHTML = '<ion-icon name="add-circle-outline"></ion-icon><p class="ejercicio__tiempo">Unirse a un ejercicio</p>'
             crearBtn.classList.add("unirse")
             crearDiv.classList.add("visible")
+                setTimeout(() => { unirseEjercicio() }, 1500);
+            
+            if (ejUnidos !== undefined) {
+                await mostrarEjercicios()
+            } else if (ejunidos == undefined) {
+                contenedorDashboard.innerHTML += `
+                    <div class="ejercicio"><h5 class="sin-ejercicios"><ion-icon name="alert-circle"></ion-icon> No estás unido a ningún ejercicio. Si no te unís a un ejercicio en los próximos 10 días, tu cuenta será eliminada.</h5>
+                </div>`;
+            }
         };
 
-        userPerfil === "profesor" && await cargarUsuarios();
+        // userPerfil === "profesor" && await cargarUsuarios();
 
-        (userPerfil === "profesor" || ejUnidos !== undefined) && await mostrarEjercicios()
+        // (userPerfil === "profesor" || ejUnidos !== undefined) && await mostrarEjercicios()
 
-        setTimeout(() => {
-            (userPerfil === "alumno" || ejUnidos !== undefined) && unirseEjercicio()
-        }, 1500);
+        // setTimeout(() => {
+        //     (userPerfil === "alumno" || ejUnidos !== undefined) && unirseEjercicio()
+        // }, 1500);
 
-        if (userPerfil === "alumno" && ejUnidos !== undefined) {
-            contenedorDashboard.innerHTML += `
-            <div class="ejercicio"><h5 class="sin-ejercicios"><ion-icon name="alert-circle"></ion-icon> No estás unido a ningún ejercicio. Si no te unís a un ejercicio en los próximos 10 días, tu cuenta será eliminada.</h5>
-            </div>`;
-        }
+        //if (userPerfil === "alumno" && ejUnidos == undefined) {
+        //    contenedorDashboard.innerHTML += `
+        //    <div class="ejercicio"><h5 class="sin-ejercicios"><ion-icon name="alert-circle"></ion-icon> No estás unido a ningún ejercicio. Si no te unís a un ejercicio en los próximos 10 días, tu cuenta será eliminada.</h5>
+        //    </div>`;
+        //}
 
-        setTimeout(() => {
-            userPerfil == "profesor" && (editarEliminarEjercicio(), crearEjercicio());
-        }, 1500);
+        //setTimeout(() => {
+        //    userPerfil == "profesor" && (editarEliminarEjercicio(), crearEjercicio());
+        //}, 1500);
 
-        setTimeout(() => { visualizarEjercicio() }, 1500);;
+        setTimeout(() => { visualizarEjercicio() }, 1600);;
     })
 }
 
